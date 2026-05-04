@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  username        String    @unique
+  passwordHash    String    @field(name: "password_hash")
+  isAdmin         Boolean   @default(false) @field(name: "is_admin")
+  isVendor        Boolean   @default(false) @field(name: "is_vendor")
+  vendorName      String?   @field(name: "vendor_name")
+  phone          String?
+  subscriptionTier String   @default("free") @field(name: "subscription_tier")
+  stripeCustomerId String?  @field(name: "stripe_customer_id")
+  createdAt       DateTime  @default(now()) @field(name: "created_at")
+  updatedAt       DateTime  @updatedAt @field(name: "updated_at")
+  alerts          Alert[]
+  subscriptions   Subscription[]
+}
+
+model Alert {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @field(name: "user_id")
+  user            User      @relation(fields: [userId], references: [id])
+  keyword        String    // vendor name or item to alert on
+  active         Boolean   @default(true)
+  createdAt       DateTime  @default(now()) @field(name: "created_at")
+}
+
+model Subscription {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @field(name: "user_id")
+  user            User      @relation(fields: [userId], references: [id])
+  stripeSubId     String    @unique @field(name: "stripe_sub_id")
+  status          String
+  tier            String
+  currentPeriodEnd DateTime @field(name: "current_period_end")
+  createdAt       DateTime  @default(now()) @field(name: "created_at")
+  updatedAt       DateTime  @updatedAt @field(name: "updated_at")
+}
+
+model Market {
+  id              Int       @id @default(autoincrement())
+  name            String
+  slug            String    @unique
+  address         String
+  city            String
+  province       String    @default("AB")
+  postalCode     String    @field(name: "postal_code")
+  lat            Float
+  lng            Float
+  website       String?
+  facebook      String?
+  description   String?
+  schedule      Json      // { day, startTime, endTime, startDate, endDate }[]
+  isActive       Boolean   @default(true) @field(name: "is_active")
+  createdAt       DateTime  @default(now()) @field(name: "created_at")
+  updatedAt       DateTime  @updatedAt @field(name: "updated_at")
+  vendors        Vendor[]
+  items          MarketItem[]
+}
+
+model Vendor {
+  id              Int       @id @default(autoincrement())
+  marketId       Int       @field(name: "market_id")
+  market         Market    @relation(fields: [marketId], references: [id])
+  name           String
+  description   String?
+  contact       String?
+  website       String?
+  facebook      String?
+  items         String    // JSON array
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now()) @field(name: "created_at")
+  updatedAt    DateTime  @updatedAt @field(name: "updated_at")
+  marketItems   MarketItem[]
+}
+
+model MarketItem {
+  id              Int       @id @default(autoincrement())
+  marketId       Int       @field(name: "market_id")
+  market         Market    @relation(fields: [marketId], references: [id])
+  vendorId       Int?      @field(name: "vendor_id")
+  vendor         Vendor?   @relation(fields: [vendorId], references: [id])
+  name          String
+  category      String?   // produce, baked, crafts, etc.
+  price         String?
+  unit          String?   // per lb, each, bunch, etc.
+  available    Boolean   @default(true)
+  updatedAt     DateTime  @default(now()) @field(name: "updated_at")
+  
+  @@index([marketId])
+  @@index([vendorId])
+}
+
+model WhatsFresh {
+  id              Int       @id @default(autoincrement())
+  title           String
+  description     String
+  image          String?
+  vendorId       Int?      @field(name: "vendor_id")
+  marketId       Int       @field(name: "market_id")
+  active         Boolean   @default(true)
+  createdAt      DateTime  @default(now()) @field(name: "created_at")
+}

@@ -1,0 +1,473 @@
+/* Central Alberta Markets - Global Styles */
+/* Matching Central Alberta After Dark Night Owl Theme */
+
+:root {
+  --primary: #FFEB43;
+  --secondary: #003594;
+  --background: #0a0a1a;
+  --surface: #141432;
+  --surface-light: #1e1e4a;
+  --text: #ffffff;
+  --text-muted: #aaaaaa;
+  --success: #22c55e;
+  --error: #ef4444;
+  --gold: #fbbf24;
+  --border: #FFEB43;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, rgba(0,0,0,0.95), rgba(20,20,50,0.95));
+  border-bottom: 3px solid var(--primary);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: 'Impact', 'Oswald', sans-serif;
+  font-size: 1.8rem;
+  color: var(--primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--primary);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--primary);
+  color: var(--secondary);
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 235, 67, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: var(--primary);
+  color: var(--secondary);
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+/* Footer */
+.footer {
+  background: var(--surface);
+  border-top: 3px solid var(--primary);
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.footer-content a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.footer-content a:hover {
+  color: var(--primary);
+}
+
+.separator {
+  color: var(--text-muted);
+}
+
+.copyright {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 3px solid var(--primary);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 0 50px rgba(255, 235, 67, 0.15);
+}
+
+.card h2 {
+  font-family: 'Impact', 'Oswald', sans-serif;
+  color: var(--primary);
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+/* Section Headers */
+.section-title {
+  font-family: 'Impact', 'Oswald', sans-serif;
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Grid Layouts */
+.markets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.market-card {
+  background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,50,0.8));
+  border: 3px solid var(--primary);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.market-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(255, 235, 67, 0.25);
+}
+
+.market-card h3 {
+  font-family: 'Impact', 'Oswald', sans-serif;
+  font-size: 1.4rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.market-card .location {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.market-card .schedule {
+  background: var(--surface-light);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.market-card .schedule-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.market-card .day {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.market-card .time {
+  color: var(--text-muted);
+}
+
+/* Map Container */
+.map-container {
+  height: 500px;
+  border: 4px solid var(--primary);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+/* Leaflet Custom Styles */
+.leaflet-container {
+  background: var(--surface);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+}
+
+.leaflet-popup-tip {
+  background: var(--surface);
+}
+
+/* Fresh Section */
+.fresh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.fresh-card {
+  background: var(--surface);
+  border: 3px solid var(--primary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fresh-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.fresh-card .content {
+  padding: 1rem;
+}
+
+.fresh-card h4 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.fresh-card .meta {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pricing-card {
+  background: linear-gradient(135deg, rgba(0,0,0,0.95), rgba(20,20,50,0.95));
+  border: 3px solid var(--primary);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.pricing-card.featured {
+  border-color: var(--gold);
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
+}
+
+.pricing-card h3 {
+  font-family: 'Impact', 'Oswald', sans-serif;
+  color: var(--primary);
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.pricing-card .price {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.pricing-card .price span {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.pricing-card ul {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.pricing-card li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--surface-light);
+}
+
+.pricing-card li::before {
+  content: "✓ ";
+  color: var(--success);
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--surface-light);
+  border: 2px solid var(--surface);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Admin Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+}
+
+.sidebar {
+  background: var(--surface);
+  border: 3px solid var(--primary);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 0.75rem;
+  margin: 0.25rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  background: var(--surface-light);
+  color: var(--primary);
+}
+
+.dashboard-content {
+  background: var(--surface);
+  border: 3px solid var(--primary);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.item-card {
+  background: var(--surface-light);
+  border: 2px solid var(--surface);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.item-card.available {
+  border-color: var(--success);
+}
+
+.item-card input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .markets-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
