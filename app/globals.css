@@ -48,12 +48,12 @@ body {
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .logo {
@@ -63,18 +63,22 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
+  padding: 0.5rem;
 }
 
 .nav {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem;
 }
 
 .nav a {
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
+  padding: 0.5rem 0.75rem;
   transition: color 0.2s;
 }
 
