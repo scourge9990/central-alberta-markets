@@ -11,101 +11,101 @@ model User {
   id              Int       @id @default(autoincrement())
   email           String    @unique
   username        String    @unique
-  passwordHash    String    @field(name: "password_hash")
-  isAdmin         Boolean   @default(false) @field(name: "is_admin")
-  isVendor        Boolean   @default(false) @field(name: "is_vendor")
-  vendorName      String?   @field(name: "vendor_name")
-  phone          String?
-  subscriptionTier String   @default("free") @field(name: "subscription_tier")
-  stripeCustomerId String?  @field(name: "stripe_customer_id")
-  createdAt       DateTime  @default(now()) @field(name: "created_at")
-  updatedAt       DateTime  @updatedAt @field(name: "updated_at")
-  alerts          Alert[]
-  subscriptions   Subscription[]
+  password_hash   String
+  is_admin        Boolean   @default(false)
+  is_vendor      Boolean   @default(false)
+  vendor_name    String?
+  phone         String?
+  subscription_tier String   @default("free")
+  stripe_customer_id String?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  alerts         Alert[]
+  subscriptions Subscription[]
 }
 
 model Alert {
-  id              Int       @id @default(autoincrement())
-  userId          Int       @field(name: "user_id")
-  user            User      @relation(fields: [userId], references: [id])
-  keyword        String    // vendor name or item to alert on
-  active         Boolean   @default(true)
-  createdAt       DateTime  @default(now()) @field(name: "created_at")
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user      User     @relation(fields: [user_id], references: [id])
+  keyword   String
+  active    Boolean  @default(true)
+  created_at DateTime @default(now())
 }
 
 model Subscription {
-  id              Int       @id @default(autoincrement())
-  userId          Int       @field(name: "user_id")
-  user            User      @relation(fields: [userId], references: [id])
-  stripeSubId     String    @unique @field(name: "stripe_sub_id")
-  status          String
-  tier            String
-  currentPeriodEnd DateTime @field(name: "current_period_end")
-  createdAt       DateTime  @default(now()) @field(name: "created_at")
-  updatedAt       DateTime  @updatedAt @field(name: "updated_at")
+  id                Int       @id @default(autoincrement())
+  user_id           Int
+  user              User      @relation(fields: [user_id], references: [id])
+  stripe_sub_id      String    @unique
+  status            String
+  tier              String
+  current_period_end DateTime
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
 }
 
 model Market {
-  id              Int       @id @default(autoincrement())
-  name            String
-  slug            String    @unique
-  address         String
-  city            String
-  province       String    @default("AB")
-  postalCode     String    @field(name: "postal_code")
-  lat            Float
-  lng            Float
+  id            Int       @id @default(autoincrement())
+  name          String
+  slug          String    @unique
+  address       String
+  city          String
+  province      String    @default("AB")
+  postal_code   String
+  lat           Float
+  lng           Float
   website       String?
-  facebook      String?
-  description   String?
-  schedule      Json      // { day, startTime, endTime, startDate, endDate }[]
-  isActive       Boolean   @default(true) @field(name: "is_active")
-  createdAt       DateTime  @default(now()) @field(name: "created_at")
-  updatedAt       DateTime  @updatedAt @field(name: "updated_at")
-  vendors        Vendor[]
-  items          MarketItem[]
+  facebook     String?
+  description  String?
+  schedule     Json
+  is_active    Boolean   @default(true)
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  vendors     Vendor[]
+  items       MarketItem[]
 }
 
 model Vendor {
-  id              Int       @id @default(autoincrement())
-  marketId       Int       @field(name: "market_id")
-  market         Market    @relation(fields: [marketId], references: [id])
-  name           String
-  description   String?
-  contact       String?
-  website       String?
-  facebook      String?
-  items         String    // JSON array
-  active        Boolean   @default(true)
-  createdAt     DateTime  @default(now()) @field(name: "created_at")
-  updatedAt    DateTime  @updatedAt @field(name: "updated_at")
-  marketItems   MarketItem[]
+  id          Int       @id @default(autoincrement())
+  market_id   Int
+  market     Market    @relation(fields: [market_id], references: [id])
+  name       String
+  description String?
+  contact    String?
+  website   String?
+  facebook  String?
+  items     String
+  active    Boolean  @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  market_items MarketItem[]
 }
 
 model MarketItem {
-  id              Int       @id @default(autoincrement())
-  marketId       Int       @field(name: "market_id")
-  market         Market    @relation(fields: [marketId], references: [id])
-  vendorId       Int?      @field(name: "vendor_id")
-  vendor         Vendor?   @relation(fields: [vendorId], references: [id])
-  name          String
-  category      String?   // produce, baked, crafts, etc.
-  price         String?
-  unit          String?   // per lb, each, bunch, etc.
-  available    Boolean   @default(true)
-  updatedAt     DateTime  @default(now()) @field(name: "updated_at")
-  
-  @@index([marketId])
-  @@index([vendorId])
+  id          Int       @id @default(autoincrement())
+  market_id   Int
+  market     Market    @relation(fields: [market_id], references: [id])
+  vendor_id   Int?
+  vendor     Vendor?   @relation(fields: [vendor_id], references: [id])
+  name       String
+  category   String?
+  price      String?
+  unit       String?
+  available  Boolean   @default(true)
+  updated_at  DateTime   @default(now())
+
+  @@index([market_id])
+  @@index([vendor_id])
 }
 
 model WhatsFresh {
-  id              Int       @id @default(autoincrement())
-  title           String
-  description     String
-  image          String?
-  vendorId       Int?      @field(name: "vendor_id")
-  marketId       Int       @field(name: "market_id")
-  active         Boolean   @default(true)
-  createdAt      DateTime  @default(now()) @field(name: "created_at")
+  id         Int      @id @default(autoincrement())
+  title      String
+  description String
+  image      String?
+  vendor_id  Int?
+  market_id  Int
+  active    Boolean   @default(true)
+  created_at DateTime  @default(now())
 }
