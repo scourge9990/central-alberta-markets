@@ -72,10 +72,10 @@ export default async function Home() {
 const heroStyles = `
   .hero {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 4rem 1.5rem;
     background: linear-gradient(180deg, rgba(255,235,67,0.1) 0%, transparent 100%);
     border-bottom: 3px solid var(--primary);
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
   .hero-title {
     font-family: 'Impact', 'Oswald', sans-serif;
@@ -83,18 +83,18 @@ const heroStyles = `
     color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 4px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
   .hero-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: var(--text-muted);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
   .hero-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
   .dating-link {
     color: var(--primary);

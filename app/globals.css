@@ -188,8 +188,8 @@ body {
 /* Grid Layouts */
 .markets-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
   margin-top: 2rem;
 }
 
@@ -197,8 +197,9 @@ body {
   background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,50,0.8));
   border: 3px solid var(--primary);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 1.75rem;
   transition: all 0.3s;
+  min-height: 160px;
 }
 
 .market-card:hover {
@@ -269,8 +270,8 @@ body {
 /* Fresh Section */
 .fresh-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
 }
 
 .fresh-card {

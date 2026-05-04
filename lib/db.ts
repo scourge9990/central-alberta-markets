@@ -1,19 +1,7 @@
 // Central Alberta Markets - Database Client
-// Uses Prisma for PostgreSQL, with fallback to static data
+// Using static data (no database needed for local development)
 
-import { PrismaClient } from '@prisma/client';
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
-}
-
-// Fallback market data when database is not available
+// Fallback market data - Central Alberta farmers markets
 export const fallbackMarkets = [
   { id: 1, name: 'Red Deer Farmers Market', city: 'Red Deer', address: '43rd St & 48th Ave', lat: 52.2697, lng: -113.8021, slug: 'red-deer', schedule: [{ day: 'Saturday', startTime: '8:00 AM', endTime: '12:30 PM' }] },
   { id: 2, name: 'Lacombe Farmers Market', city: 'Lacombe', address: '5020 C&E Trail', lat: 52.4500, lng: -113.7300, slug: 'lacombe', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '1:00 PM' }] },
@@ -27,7 +15,7 @@ export const fallbackMarkets = [
   { id: 10, name: 'Blackfalds Community Market', city: 'Blackfalds', address: 'Blackfalds Community Centre', lat: 52.3989, lng: -113.8021, slug: 'blackfalds', schedule: [{ day: 'Wednesday', startTime: '3:00 PM', endTime: '7:30 PM' }] },
 ];
 
-// What's fresh this weekend - static data for the fresh section
+// What's fresh this weekend - static data
 export const freshItems = [
   { name: 'Fresh Garden Vegetables', vendor: 'Innisfail Growers', market: 'Innisfail', type: 'produce', emoji: '🥬' },
   { name: 'Artisan Sourdough Bread', vendor: 'Mountain Oven Bakery', market: 'Red Deer', type: 'baked', emoji: '🍞' },
