@@ -12,17 +12,27 @@ export default async function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="hero">
-        <h1 className="hero-title">🌾 Central Alberta Farmers Markets</h1>
-        <p className="hero-subtitle">Fresh local produce, artisan goods, and community connection</p>
-        <div className="hero-buttons">
-          <Link href="/map" className="btn-primary">🗺️ View Map</Link>
-          <Link href="/subscribe" className="btn-secondary">⭐ Go Premium</Link>
+      <div style={{ textAlign: 'center', padding: '3rem 0' }}>
+        <h1 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#FFEB43', marginBottom: '1rem' }}>
+          🌾 Central Alberta Markets
+        </h1>
+        <p style={{ textAlign: 'center', fontSize: '1.25rem', color: '#CCCCCC', marginBottom: '1.5rem' }}>
+          Fresh local produce, artisan goods, and community connection
+        </p>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+          <Link href="/map" style={{ background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginRight: '20px' }}>
+            🗺️ View Map
+          </Link>
+          <Link href="/subscribe" style={{ border: '2px solid #FFEB43', color: '#FFEB43', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
+            ⭐ Go Premium
+          </Link>
         </div>
-        <Link href="https://central-alberta-after-dark.vercel.app" target="_blank" rel="noopener" className="dating-link">
-          🌙 Looking for love? Find a First Date Spot →
-        </Link>
-      </section>
+        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+          <Link href="https://central-alberta-after-dark.vercel.app" target="_blank" rel="noopener" style={{ color: '#FFEB43', textDecoration: 'none' }}>
+            🌙 Looking for love? Find a First Date Spot →
+          </Link>
+        </div>
+      </div>
 
       {/* Markets Grid */}
       <section>
@@ -72,10 +82,14 @@ export default async function Home() {
 const heroStyles = `
   .hero {
     text-align: center;
-    padding: 4rem 1.5rem;
+    padding: 4rem 2rem;
     background: linear-gradient(180deg, rgba(255,235,67,0.1) 0%, transparent 100%);
     border-bottom: 3px solid var(--primary);
     margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
   .hero-title {
     font-family: 'Impact', 'Oswald', sans-serif;
@@ -83,23 +97,23 @@ const heroStyles = `
     color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 4px;
-    margin-bottom: 1.5rem;
   }
   .hero-subtitle {
     font-size: 1.4rem;
     color: var(--text-muted);
-    margin-bottom: 2.5rem;
   }
   .hero-buttons {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
   }
   .dating-link {
     color: var(--primary);
     font-size: 1.1rem;
     text-decoration: none;
+    margin-top: 0.5rem;
   }
   .dating-link:hover {
     text-decoration: underline;
