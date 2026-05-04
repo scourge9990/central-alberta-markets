@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/map">Map</Link>
                 <Link href="/fresh">Whats Fresh</Link>
                 <Link href="/subscribe" className="btn-primary">Go Premium</Link>
-                <Link href="/login" className="btn-secondary">Login</Link>
+                <Link href="/login" className="btn-secondary">Login / Sign Up</Link>
               </nav>
             </div>
           </header>
