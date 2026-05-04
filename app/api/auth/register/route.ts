@@ -4,7 +4,7 @@ import { prisma } from '@/lib/db';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password, username } = body;
+    const { email, password, name } = body;
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password required' }, { status: 400 });
@@ -19,11 +19,13 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingUser) {
-      if (Buffer.from(existingUser.passwordHash, 'base64').toString() !== password) {
+      // Verify password
+      const storedPassword = Buffer.from(existingUser.password, 'base64').toString();
+      if (storedPassword !== password) {
         return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
       }
       return NextResponse.json({ 
-        user: { id: existingUser.id, email: existingUser.email, username: existingUser.username, isVendor: existingUser.isVendor, isAdmin: existingUser.isAdmin } 
+        user: { id: existingUser.id, email: existingUser.email, name: existingUser.name, role: existingUser.role } 
       });
     }
 
@@ -31,13 +33,13 @@ export async function POST(request: NextRequest) {
     const user = await prisma.user.create({
       data: {
         email,
-        username: username || email.split('@')[0],
-        passwordHash,
+        name: name || email.split('@')[0],
+        password: passwordHash,
       },
     });
 
     return NextResponse.json({ 
-      user: { id: user.id, email: user.email, username: user.username, isVendor: user.isVendor, isAdmin: user.isAdmin } 
+      user: { id: user.id, email: user.email, name: user.name, role: user.role } 
     });
   } catch (error: any) {
     console.error('Auth error:', error);

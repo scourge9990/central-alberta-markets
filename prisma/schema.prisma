@@ -1,0 +1,91 @@
+// Central Alberta Markets - Prisma Schema
+// Matches Central Alberta After Dark database structure
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - for authentication
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  password  String
+  role      String    @default("user") // "user" or "admin"
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  subscription Subscription?
+}
+
+// Market model - farmers markets in Central Alberta
+model Market {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  city        String
+  address     String?
+  description String?
+  lat         Float?
+  lng         Float?
+  isActive   Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  schedules   MarketSchedule[]
+  vendors     Vendor[]
+}
+
+model MarketSchedule {
+  id        Int      @id @default(autoincrement())
+  marketId Int
+  market   Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  dayOfWeek String   // "Monday", "Tuesday", etc.
+  startTime String  // "8:00 AM"
+  endTime   String  // "12:00 PM"
+}
+
+// Vendor model - sellers at markets
+model Vendor {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  marketId   Int
+  market     Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  isActive   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  items      Item[]
+}
+
+// Item model - products available from vendors
+model Item {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  category   String   // "produce", "baked", "dairy", "pantry"
+  price       Decimal?
+  vendorId    Int
+  vendor      Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  available  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Subscription model - Stripe subscriptions
+model Subscription {
+  id               Int       @id @default(autoincrement())
+  userId           Int       @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId  String    @unique
+  stripeSubscriptionId String? @unique
+  stripePriceId     String?
+  status           String    // "active", "canceled", "past_due"
+  currentPeriodEnd DateTime?
+  email            String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}

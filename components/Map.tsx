@@ -1,23 +1,25 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-interface Market {
+// Market type matching the data structure
+type MarketType = {
   id: number;
   name: string;
+  city: string;
   address: string;
   lat: number;
   lng: number;
-  schedule?: string;
+  schedule: string;
   slug: string;
-}
+};
 
 interface Props {
-  markets: Market[];
+  markets: MarketType[];
   center: [number, number];
-  onSelectMarket?: (market: Market) => void;
+  onSelectMarket?: (market: MarketType) => void;
 }
 
 export default function Map({ markets, center, onSelectMarket }: Props) {

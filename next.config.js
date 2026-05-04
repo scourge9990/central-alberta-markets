@@ -1,6 +1,5 @@
-import { defineConfig } from 'next';
-
-export default defineConfig({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['api.dicebear.com'],
@@ -11,4 +10,6 @@ export default defineConfig({
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
   },
-});
+};
+
+module.exports = nextConfig;

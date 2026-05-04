@@ -1,38 +1,13 @@
 import Link from 'next/link';
-import { prisma } from '@/lib/db';
+import { fallbackMarkets, freshItems } from '@/lib/db';
 
 export const revalidate = 60;
 
-async function getMarkets() {
-  try {
-    return await prisma.market.findMany({
-      where: { isActive: true },
-      orderBy: { name: 'asc' },
-      include: { items: { where: { available: true }, take: 5 } },
-    });
-  } catch {
-    return [];
-  }
-}
-
 export default async function Home() {
-  const markets = await getMarkets();
-
-  // Fallback data if no DB
-  const fallbackMarkets = [
-    { id: 1, name: 'Red Deer Farmers Market', city: 'Red Deer', address: '43rd St & 48th Ave', schedule: [{ day: 'Saturday', startTime: '8:00 AM', endTime: '12:30 PM' }], lat: 52.2697, lng: -113.8021, slug: 'red-deer' },
-    { id: 2, name: 'Lacombe Farmers Market', city: 'Lacombe', address: '5020 C&E Trail', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '1:00 PM' }], lat: 52.4500, lng: -113.7300, slug: 'lacombe' },
-    { id: 3, name: 'Sylvan Lake Farmers Market', city: 'Sylvan Lake', address: '5002 Lakeside Dr', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }], lat: 52.2960, lng: -114.0900, slug: 'sylvan-lake' },
-    { id: 4, name: 'Innisfail Growers Market', city: 'Innisfail', address: 'Hwy 2A', schedule: [{ day: 'Thursday', startTime: '3:30 PM', endTime: '6:30 PM' }, { day: 'Saturday', startTime: '8:00 AM', endTime: '12:30 PM' }], lat: 52.0303, lng: -114.3269, slug: 'innisfail' },
-    { id: 5, name: 'Olds Farmers Market', city: 'Olds', address: '5612 Highway 27', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '2:00 PM' }], lat: 51.7892, lng: -114.1066, slug: 'olds' },
-    { id: 6, name: 'Bentley Farmers Market', city: 'Bentley', address: '5002 Range Rd 20', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '2:00 PM' }], lat: 52.4638, lng: -114.2598, slug: 'bentley' },
-    { id: 7, name: 'Wetaskiwin Farmers Market', city: 'Wetaskiwin', address: '5204 Hwy 2A', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }], lat: 52.9685, lng: -113.3807, slug: 'wetaskiwin' },
-    { id: 8, name: 'Stettler Farmers Market', city: 'Stettler', address: 'Stettner Rec Centre', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }], lat: 52.3192, lng: -112.9658, slug: 'stettler' },
-    { id: 9, name: 'Sundre Farmers Market', city: 'Sundre', address: 'Mountain View County', schedule: [{ day: 'Friday', startTime: '4:00 PM', endTime: '7:00 PM' }], lat: 51.7983, lng: -114.6394, slug: 'sundre' },
-    { id: 10, name: 'Blackfalds Community Market', city: 'Blackfalds', address: 'Blackfalds Community Centre', schedule: [{ day: 'Wednesday', startTime: '3:00 PM', endTime: '7:30 PM' }], lat: 52.3989, lng: -113.8021, slug: 'blackfalds' },
-  ];
-
-  const displayMarkets = markets.length > 0 ? markets : fallbackMarkets;
+  // Using fallback data for now (matches your Central Alberta After Dark setup)
+  // Database integration ready when you connect PostgreSQL
+  
+  const displayMarkets = fallbackMarkets;
 
   return (
     <div>
@@ -77,17 +52,10 @@ export default async function Home() {
           Sign up for premium to get daily alerts when your favorite vendors have fresh items!
         </p>
         <div className="fresh-grid">
-          {[
-            { name: 'Fresh Garden Vegetables', vendor: 'Innisfail Growers', market: 'Innisfail', type: 'produce' },
-            { name: 'Artisan Sourdough Bread', vendor: 'Mountain Oven Bakery', market: 'Red Deer', type: 'baked' },
-            { name: 'Free-Range Eggs', vendor: 'Sunny Side Farm', market: 'Lacombe', type: 'dairy' },
-            { name: 'Local Honey', vendor: 'Bee Happy Apiaries', market: 'Sylvan Lake', type: 'pantry' },
-            { name: 'Handmade Goat Cheese', vendor: 'Rocky Mountain Dairy', market: 'Olds', type: 'dairy' },
-            { name: 'Fresh Berries', vendor: 'Eagle Lake Berry Farm', market: 'Bentley', type: 'produce' },
-          ].map((item, i) => (
+          {freshItems.map((item, i) => (
             <div key={i} className="fresh-card">
               <div style={{ background: 'var(--primary)', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>
-                {item.type === 'produce' ? '🥬' : item.type === 'baked' ? '🍞' : item.type === 'dairy' ? '🧀' : '🍯'}
+                {item.emoji}
               </div>
               <div className="content">
                 <h4>{item.name}</h4>
