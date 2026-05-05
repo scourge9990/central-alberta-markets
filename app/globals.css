@@ -50,11 +50,9 @@ body {
   margin: 0 auto;
   padding: 1.5rem 2rem;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 2rem;
-  text-align: center;
+  gap: 1.5rem;
 }
 
 .logo {
@@ -65,6 +63,8 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   padding: 0.75rem 1rem;
+  flex: 1;
+  text-align: center;
 }
 
 .nav {
@@ -73,6 +73,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   padding: 0.5rem;
+  justify-content: flex-end;
 }
 
 .nav a {
