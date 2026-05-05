@@ -20,10 +20,10 @@ export default async function Home() {
           Fresh local produce, artisan goods, and community connection
         </p>
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <Link href="/map" style={{ background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginRight: '20px' }}>
+          <Link href="/map" style={{ display: 'inline-block', background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginRight: '20px' }}>
             🗺️ View Map
           </Link>
-          <Link href="/subscribe" style={{ border: '2px solid #FFEB43', color: '#FFEB43', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
+          <Link href="/subscribe" style={{ display: 'inline-block', border: '2px solid #FFEB43', color: '#FFEB43', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
             ⭐ Go Premium
           </Link>
         </div>
