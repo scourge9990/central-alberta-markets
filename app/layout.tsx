@@ -35,7 +35,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </nav>
             </div>
           </header>
-          <main className="main">{children}</main>
+          <main className="main">
+            {/* Left Ad Frame */}
+            <div className="ad-container ad-left">
+              <div className="ad-frame">
+                <h4>Advertise Here</h4>
+                <p className="ad-placeholder">Your ad could be here!</p>
+              </div>
+            </div>
+            
+            <div className="main-with-ads">
+              <div className="main-content">{children}</div>
+            </div>
+            
+            {/* Right Ad Frame */}
+            <div className="ad-container ad-right">
+              <div className="ad-frame">
+                <h4>Advertise Here</h4>
+                <p className="ad-placeholder">Your ad could be here!</p>
+              </div>
+            </div>
+          </main>
           <footer className="footer">
             <div className="footer-content">
               <Link href="/admin">Vendor Login</Link>
