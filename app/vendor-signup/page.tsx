@@ -1,10 +1,56 @@
 import Link from 'next/link';
+import { useState } from 'react';
 
 export const metadata = {
   title: 'Vendor Sign Up - Central Alberta Markets',
 };
 
 export default function VendorSignupPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    const data = {
+      businessName: formData.get('businessName'),
+      contactName: formData.get('contactName'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      products: formData.get('products'),
+      markets: Array.from(document.querySelectorAll('select[name="markets"] option:checked')).map((o: any) => o.value),
+    };
+
+    try {
+      const res = await fetch('/api/vendor-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  };
+
+  if (submitted) {
+    return (
+      <div>
+        <h1 className="section-title">✅ Application Submitted!</h1>
+        <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem' }}>
+          Thank you! We'll be in touch soon.
+        </p>
+        <Link href="/" className="btn-primary" style={{ display: 'block', width: '200px', margin: '2rem auto', textAlign: 'center' }}>
+          Back to Home
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1 className="section-title">🏪 Vendor Registration</h1>
@@ -13,35 +59,35 @@ export default function VendorSignupPage() {
       </p>
 
       <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <form style={{ display: 'grid', gap: '1.5rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
           <div className="form-group">
             <label>Business Name *</label>
-            <input type="text" required placeholder="e.g., Sunny Acres Farm" />
+            <input type="text" name="businessName" required placeholder="e.g., Sunny Acres Farm" />
           </div>
           
           <div className="form-group">
             <label>Contact Name *</label>
-            <input type="text" required placeholder="Your name" />
+            <input type="text" name="contactName" required placeholder="Your name" />
           </div>
           
           <div className="form-group">
             <label>Email *</label>
-            <input type="email" required placeholder="you@example.com" />
+            <input type="email" name="email" required placeholder="you@example.com" />
           </div>
           
           <div className="form-group">
             <label>Phone</label>
-            <input type="tel" placeholder="(780) 555-1234" />
+            <input type="tel" name="phone" placeholder="(780) 555-1234" />
           </div>
           
           <div className="form-group">
             <label>What do you sell? *</label>
-            <input type="text" required placeholder="e.g., Fresh vegetables, Baked goods, Crafts" />
+            <input type="text" name="products" required placeholder="e.g., Fresh vegetables, Baked goods, Crafts" />
           </div>
           
           <div className="form-group">
             <label>Which markets are you interested in?</label>
-            <select multiple style={{ height: '120px' }}>
+            <select name="markets" multiple style={{ height: '120px' }}>
               <option>Saturday Morning Market - Red Deer</option>
               <option>Sunday Farmers Market - Lacombe</option>
               <option>Wednesday Night Market - Ponoka</option>
@@ -52,8 +98,8 @@ export default function VendorSignupPage() {
             </p>
           </div>
           
-          <button type="submit" className="btn-primary" style={{ width: '100%', cursor: 'pointer', fontSize: '1.1rem', marginTop: '1rem' }}>
-            Submit Vendor Application →
+          <button type="submit" className="btn-primary" disabled={loading} style={{ width: '100%', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '1.1rem', marginTop: '1rem' }}>
+            {loading ? 'Submitting...' : 'Submit Vendor Application →'}
           </button>
         </form>
         

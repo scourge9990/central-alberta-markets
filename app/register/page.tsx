@@ -1,10 +1,56 @@
 import Link from 'next/link';
+import { useState } from 'react';
 
 export const metadata = {
   title: 'Register a Table - Central Alberta Markets',
 };
 
 export default function RegisterPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    const data = {
+      market: formData.get('market'),
+      date: formData.get('date'),
+      tableType: formData.get('tableType'),
+      vendorName: formData.get('vendorName'),
+      email: formData.get('email'),
+      setupNeeds: formData.get('setupNeeds'),
+    };
+
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  };
+
+  if (submitted) {
+    return (
+      <div>
+        <h1 className="section-title">✅ Table Reserved!</h1>
+        <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem' }}>
+          Thank you! We'll confirm your reservation soon.
+        </p>
+        <Link href="/" className="btn-primary" style={{ display: 'block', width: '200px', margin: '2rem auto', textAlign: 'center' }}>
+          Back to Home
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1 className="section-title">🪑 Register a Table</h1>
@@ -13,10 +59,10 @@ export default function RegisterPage() {
       </p>
 
       <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <form style={{ display: 'grid', gap: '1.5rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
           <div className="form-group">
             <label>Select Market *</label>
-            <select required>
+            <select name="market" required>
               <option value="">Choose a market...</option>
               <option>Saturday Morning Market - Red Deer</option>
               <option>Sunday Farmers Market - Lacombe</option>
@@ -27,12 +73,12 @@ export default function RegisterPage() {
           
           <div className="form-group">
             <label>Select Date *</label>
-            <input type="date" required />
+            <input type="date" name="date" required />
           </div>
           
           <div className="form-group">
             <label>Table Type *</label>
-            <select required>
+            <select name="tableType" required>
               <option value="">Choose table type...</option>
               <option>Single Table ($25)</option>
               <option>Double Table ($45)</option>
@@ -43,21 +89,21 @@ export default function RegisterPage() {
           
           <div className="form-group">
             <label>Vendor Name *</label>
-            <input type="text" required placeholder="Your business name" />
+            <input type="text" name="vendorName" required placeholder="Your business name" />
           </div>
           
           <div className="form-group">
             <label>Contact Email *</label>
-            <input type="email" required placeholder="you@example.com" />
+            <input type="email" name="email" required placeholder="you@example.com" />
           </div>
           
           <div className="form-group">
             <label>Table Setup Needs</label>
-            <textarea rows={3} placeholder="Any special requirements? (electrical, tent, loading dock, etc.)" style={{ width: '100%', padding: '0.75rem', background: 'var(--surface-light)', border: '2px solid var(--surface)', borderRadius: '8px', color: 'var(--text)', fontSize: '1rem' }} />
+            <textarea name="setupNeeds" rows={3} placeholder="Any special requirements? (electrical, tent, loading dock, etc.)" style={{ width: '100%', padding: '0.75rem', background: 'var(--surface-light)', border: '2px solid var(--surface)', borderRadius: '8px', color: 'var(--text)', fontSize: '1rem' }} />
           </div>
           
-          <button type="submit" className="btn-primary" style={{ width: '100%', cursor: 'pointer', fontSize: '1.1rem', marginTop: '1rem' }}>
-            Reserve My Table →
+          <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '1.1rem', marginTop: '1rem' }}>
+            {loading ? 'Submitting...' : 'Reserve My Table →'}
           </button>
         </form>
         
