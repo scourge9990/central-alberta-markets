@@ -32,7 +32,7 @@ export default function SubscribePage() {
           <div style={{ position: 'absolute', top: '-12px', right: '20px', background: 'var(--gold)', color: 'var(--secondary)', padding: '4px 16px', borderRadius: '20px', fontWeight: 'bold', fontSize: '0.85rem' }}>
             ⭐ BEST VALUE
           </div>
-          <h3>🌙 Night Owl Premium</h3>
+          <h3>🌾 Market Premium</h3>
           <div className="price">$20<span>/month</span></div>
           <ul>
             <li>Everything in Free</li>
