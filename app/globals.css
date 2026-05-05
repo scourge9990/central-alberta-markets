@@ -50,10 +50,11 @@ body {
   margin: 0 auto;
   padding: 1.5rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 2rem;
+  text-align: center;
 }
 
 .logo {
