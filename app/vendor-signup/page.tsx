@@ -1,9 +1,7 @@
+'use client';
+
 import Link from 'next/link';
 import { useState } from 'react';
-
-export const metadata = {
-  title: 'Vendor Sign Up - Central Alberta Markets',
-};
 
 export default function VendorSignupPage() {
   const [submitted, setSubmitted] = useState(false);

@@ -1,9 +1,7 @@
+'use client';
+
 import Link from 'next/link';
 import { useState } from 'react';
-
-export const metadata = {
-  title: 'Register a Table - Central Alberta Markets',
-};
 
 export default function RegisterPage() {
   const [submitted, setSubmitted] = useState(false);
