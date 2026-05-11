@@ -115,7 +115,7 @@ export default function LoginPage() {
 
         <p style={{ textAlign: 'center', marginTop: '1rem' }}>
           <Link href="/subscribe" style={{ color: 'var(--primary)' }}>
-            ⭐ Go Premium
+            ⭐ Get Market Max
           </Link>
         </p>
       </div>

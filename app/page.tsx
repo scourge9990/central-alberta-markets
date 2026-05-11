@@ -25,7 +25,7 @@ export default async function Home() {
             🗺️ View Map
           </Link>
           <Link href="/subscribe" style={{ display: 'inline-block', border: '2px solid #FFEB43', color: '#FFEB43', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
-            ⭐ Go Premium
+            ⭐ Get Market Max
           </Link>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
