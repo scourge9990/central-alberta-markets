@@ -102,7 +102,7 @@ export default function VendorSignupPage() {
         </form>
         
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          Questions? <a href="mailto: vendors@centralalbertamarkets.ca" style={{ color: 'var(--primary)' }}>Email us</a>
+          Questions? <a href="mailto: vendors@centralalbertamarkets.com" style={{ color: 'var(--primary)' }}>Email us</a>
         </p>
       </div>
     </div>
