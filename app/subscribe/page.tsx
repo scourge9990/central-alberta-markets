@@ -1,6 +1,31 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function SubscribePage() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/stripe/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: 'customer@test.com' }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || 'Error creating checkout');
+      }
+    } catch (e) {
+      alert('Error');
+    }
+    setLoading(false);
+  };
+
   return (
     <div>
       <h1 className="section-title">⭐ Premium Subscription</h1>
@@ -44,8 +69,13 @@ export default function SubscribePage() {
             <li><strong>Vendor dashboard access</strong> to update your items</li>
             <li>Priority support</li>
           </ul>
-          <button className="btn-primary" style={{ display: 'block', width: '100%', fontSize: '1.1rem', cursor: 'pointer' }}>
-            Subscribe with Stripe →
+          <button 
+            className="btn-primary" 
+            style={{ display: 'block', width: '100%', fontSize: '1.1rem', cursor: loading ? 'wait' : 'pointer' }}
+            onClick={handleSubscribe}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Subscribe with Stripe →'}
           </button>
         </div>
       </div>
