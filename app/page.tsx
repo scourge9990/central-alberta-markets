@@ -29,7 +29,7 @@ export default async function Home() {
           </Link>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-          <Link href="https://centralalbertaafterdark.com/" target="_blank" rel="noopener" style={{ color: '#FFEB43', textDecoration: 'none' }}>
+          <Link href="https://centralalbertaafterdark.com/" target="_blank" rel="noopener" style={{ display: 'inline-block', background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginTop: '1rem' }}>
             🌙 Looking for love? Find a First Date Spot →
           </Link>
         </div>
