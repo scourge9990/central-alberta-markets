@@ -88,3 +88,31 @@ model Subscription {
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 }
+
+// Vendor Application - vendor signups
+model VendorApplication {
+  id          Int       @id @default(autoincrement())
+  businessName String
+  contactName  String
+  email        String
+  phone       String?
+  description String?
+  markets    String?   // JSON array of market IDs
+  status      String    @default("pending") // "pending", "approved", "rejected"
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Table Reservation - register table
+model TableReservation {
+  id          Int       @id @default(autoincrement())
+  marketId    Int
+  date        String
+  tableType   String    // "single", "double", "booth10", "booth20"
+  vendorName  String
+  email       String
+  requirements String?
+  status     String    @default("pending") // "pending", "confirmed", "cancelled"
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
