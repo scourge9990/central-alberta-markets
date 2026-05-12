@@ -57,6 +57,7 @@ export async function POST() {
     return NextResponse.json({ success: true, message: 'Database bootstrapped!' });
   } catch (error) {
     console.error('Bootstrap error:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }
