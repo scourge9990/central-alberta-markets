@@ -1,8 +1,9 @@
 // Central Alberta Markets - Database Client
 // Using static data (no database needed for local development)
 
-// Fallback market data - Central Alberta farmers markets
+// Fallback market data - Central Alberta farmers markets, makers markets, and classic car swap meets
 export const fallbackMarkets = [
+  // Farmers Markets
   { id: 1, name: 'Red Deer Farmers Market', city: 'Red Deer', address: '43rd St & 48th Ave', lat: 52.2697, lng: -113.8021, slug: 'red-deer', schedule: [{ day: 'Saturday', startTime: '8:00 AM', endTime: '12:30 PM' }] },
   { id: 2, name: 'Lacombe Farmers Market', city: 'Lacombe', address: '5020 C&E Trail', lat: 52.4500, lng: -113.7300, slug: 'lacombe', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '1:00 PM' }] },
   { id: 3, name: 'Sylvan Lake Farmers Market', city: 'Sylvan Lake', address: '5002 Lakeside Dr', lat: 52.2960, lng: -114.0900, slug: 'sylvan-lake', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }] },
@@ -13,6 +14,12 @@ export const fallbackMarkets = [
   { id: 8, name: 'Stettler Farmers Market', city: 'Stettler', address: 'Stettner Rec Centre', lat: 52.3192, lng: -112.9658, slug: 'stettler', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }] },
   { id: 9, name: 'Sundre Farmers Market', city: 'Sundre', address: 'Mountain View County', lat: 51.7983, lng: -114.6394, slug: 'sundre', schedule: [{ day: 'Friday', startTime: '4:00 PM', endTime: '7:00 PM' }] },
   { id: 10, name: 'Blackfalds Community Market', city: 'Blackfalds', address: 'Blackfalds Community Centre', lat: 52.3989, lng: -113.8021, slug: 'blackfalds', schedule: [{ day: 'Wednesday', startTime: '3:00 PM', endTime: '7:30 PM' }] },
+  // Makers Markets
+  { id: 11, name: 'Red Deer Makers Market', city: 'Red Deer', address: 'Hwy 2A', lat: 52.2697, lng: -113.8021, slug: 'red-deer-makers', schedule: [{ day: 'Sunday', startTime: '10:00 AM', endTime: '4:00 PM' }] },
+  { id: 12, name: 'Lacombe Handmade Market', city: 'Lacombe', address: 'Hwy 12', lat: 52.4500, lng: -113.7300, slug: 'lacombe-makers', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '3:00 PM' }] },
+  // Classic Car Swap Meets
+  { id: 13, name: 'Red Deer Classic Car Swap Meet', city: 'Red Deer', address: 'Westerner Park', lat: 52.2697, lng: -113.8021, slug: 'red-deer-cars', schedule: [{ day: 'Saturday', startTime: '8:00 AM', endTime: '4:00 PM' }] },
+  { id: 14, name: 'Innisfail Vintage Parts Show', city: 'Innisfail', address: 'Innisfail Show Centre', lat: 52.0303, lng: -114.3269, slug: 'innisfail-cars', schedule: [{ day: 'Sunday', startTime: '9:00 AM', endTime: '3:00 PM' }] },
 ];
 
 // What's fresh this weekend - static data

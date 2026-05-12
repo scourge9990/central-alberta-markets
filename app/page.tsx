@@ -18,7 +18,7 @@ export default async function Home() {
           🌾 Central Alberta Markets
         </h1>
         <p style={{ textAlign: 'center', fontSize: '1.25rem', color: '#CCCCCC', marginBottom: '1.5rem' }}>
-          Fresh local produce, artisan goods, and community connection
+          Fresh local produce, artisan goods, makers, classic car parts, and community connection
         </p>
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           <Link href="/map" style={{ display: 'inline-block', background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginRight: '20px' }}>

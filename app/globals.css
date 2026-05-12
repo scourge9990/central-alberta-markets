@@ -609,11 +609,12 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 160px;
-  height: 600px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
   z-index: 50;
 }
 
@@ -631,7 +632,8 @@ body {
   border-radius: 12px;
   padding: 1rem;
   width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -660,7 +662,7 @@ body {
 /* Main with Ads */
 .main-with-ads {
   display: flex;
-  gap: 180px;
+  gap: 100px;
   max-width: 1400px;
   margin: 0 auto;
 }
