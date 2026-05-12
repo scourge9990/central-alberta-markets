@@ -61,8 +61,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* Right Ad Frames */}
             <div className="ad-container ad-right">
               <div className="ad-frame">
-                <h4>Advertise Here</h4>
-                <p className="ad-placeholder">Your ad could be here!</p>
+                <img 
+                  src="/ad-right-top.jpg" 
+                  alt="Advertisement" 
+                  style={{ width: '100%', borderRadius: '8px' }}
+                />
               </div>
               <div className="ad-frame">
                 <h4>Advertise Here</h4>
