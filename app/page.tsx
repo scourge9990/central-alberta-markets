@@ -38,6 +38,17 @@ export default async function Home() {
         </div>
       </div>
 
+      {/* Advertising Banner */}
+      <section style={{ margin: '2rem 0' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <img 
+            src="/advertisement.jpg" 
+            alt="Advertisement" 
+            style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
+          />
+        </div>
+      </section>
+
       {/* Markets Grid */}
       <section>
         <h2 className="section-title">All Central Alberta Markets</h2>
