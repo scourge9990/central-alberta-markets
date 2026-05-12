@@ -66,7 +66,7 @@ model Item {
   name        String
   description String?
   category   String   // "produce", "baked", "dairy", "pantry"
-  price       Decimal?
+  price       Float?
   vendorId    Int
   vendor      Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   available  Boolean  @default(true)
