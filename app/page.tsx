@@ -29,7 +29,7 @@ export default async function Home() {
           </Link>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-          <Link href="https://centralalbertamarkets.com/" target="_blank" rel="noopener" style={{ color: '#FFEB43', textDecoration: 'none' }}>
+          <Link href="https://central-alberta-after-dark.vercel.app" target="_blank" rel="noopener" style={{ color: '#FFEB43', textDecoration: 'none' }}>
             🌙 Looking for love? Find a First Date Spot →
           </Link>
         </div>
