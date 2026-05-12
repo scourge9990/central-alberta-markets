@@ -27,6 +27,15 @@ body {
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  transform-origin: top center;
+}
+
+@media (max-width: 1200px) {
+  body {
+    transform: scale(calc(100vw / 1200));
+    transform-origin: top center;
+    min-width: 1200px;
+  }
 }
 
 .app {
