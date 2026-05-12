@@ -20,6 +20,8 @@ export const fallbackMarkets = [
   // Classic Car Swap Meets
   { id: 13, name: 'Red Deer Classic Car Swap Meet', city: 'Red Deer', address: 'Westerner Park', lat: 52.2697, lng: -113.8021, slug: 'red-deer-cars', schedule: [{ day: 'Saturday', startTime: '8:00 AM', endTime: '4:00 PM' }] },
   { id: 14, name: 'Innisfail Vintage Parts Show', city: 'Innisfail', address: 'Innisfail Show Centre', lat: 52.0303, lng: -114.3269, slug: 'innisfail-cars', schedule: [{ day: 'Sunday', startTime: '9:00 AM', endTime: '3:00 PM' }] },
+  // Music
+  { id: 15, name: '🎸 Central Alberta Bands', city: 'Live Music', address: 'All Markets', lat: 52.2697, lng: -113.8021, slug: 'bands', schedule: [{ day: 'Every', startTime: 'Weekend', endTime: 'Live' }], isBands: true },
 ];
 
 // What's fresh this weekend - static data

@@ -43,8 +43,8 @@ export default async function Home() {
         <h2 className="section-title">All Central Alberta Markets</h2>
         <div className="markets-grid">
           {displayMarkets.map((market: any) => (
-            <Link href={`/market/${market.slug}`} key={market.id} className="market-card">
-              <h3>{market.name}</h3>
+            <Link href={market.isBands ? '/bands' : `/market/${market.slug}`} key={market.id} className={market.isBands ? 'market-card bands-card' : 'market-card'}>
+              <h3>{market.isBands ? '🎸 Central Alberta Bands' : market.name}</h3>
               <div className="location">📍 {market.address || market.city}, AB</div>
               <div className="schedule">
                 {(market.schedule || []).map((s: any, i: number) => (
@@ -121,5 +121,14 @@ const heroStyles = `
   }
   .dating-link:hover {
     text-decoration: underline;
+  }
+  .bands-card {
+    background: linear-gradient(135deg, #6b21a8 0%, #9333ea 100%) !important;
+    border: 2px solid #c084fc !important;
+  }
+  .bands-card:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
   }
 `;
