@@ -32,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/fresh">Whats Fresh</Link>
                 <Link href="/vendor-signup">Vendors</Link>
                 <Link href="/register">Register Table</Link>
+                <Link href="/bands">🎸 Bands</Link>
                 <Link href="/subscribe" className="btn-primary">Get Market Max</Link>
                 <Link href="/login" className="btn-secondary">Login</Link>
               </nav>

@@ -54,6 +54,25 @@ export async function POST() {
       console.log('TableReservation table ready');
     } catch (e) { /* ignore */ }
     
+    // Create Band table if not exists  
+    try {
+      await prisma.$executeRaw`CREATE TABLE IF NOT EXISTS "Band" (
+        id SERIAL PRIMARY KEY,
+        "bandName" TEXT NOT NULL,
+        "contactName" TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        genre TEXT,
+        description TEXT,
+        fee TEXT,
+        markets TEXT,
+        status TEXT DEFAULT 'pending',
+        "createdAt" TIMESTAMP DEFAULT NOW(),
+        "updatedAt" TIMESTAMP DEFAULT NOW()
+      )`;
+      console.log('Band table ready');
+    } catch (e) { /* ignore */ }
+    
     return NextResponse.json({ success: true, message: 'Database bootstrapped!' });
   } catch (error) {
     console.error('Bootstrap error:', error);

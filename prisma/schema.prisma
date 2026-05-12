@@ -116,3 +116,18 @@ model TableReservation {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+// Band Application - music act signups
+model Band {
+  id          Int       @id @default(autoincrement())
+  bandName    String
+  contactName String
+  email       String
+  phone      String?
+  genre      String?
+  description String?
+  fee        String?
+  markets    String?
+  status     String    @default("pending") // "pending", "approved", "rejected"
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
