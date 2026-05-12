@@ -84,7 +84,7 @@ export default function SubscribePage() {
         <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
           🔒 Secure payments powered by Stripe. Cancel anytime.
         </p>
-        <Link href="/admin/dashboard" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
+        <Link href="/admin" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
           Vendor Login →
         </Link>
       </div>

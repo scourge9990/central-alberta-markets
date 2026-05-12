@@ -37,7 +37,7 @@ export default function LoginPage() {
 
       // Redirect to appropriate dashboard
       if (data.user?.isAdmin || data.user?.isVendor) {
-        router.push('/admin/dashboard');
+        router.push('/admin');
       } else {
         router.push('/subscribe');
       }
