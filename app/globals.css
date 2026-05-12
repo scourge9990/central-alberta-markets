@@ -35,6 +35,13 @@ body {
     transform: scale(calc(100vw / 1200));
     transform-origin: top center;
     min-width: 1200px;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+  
+  html, body {
+    height: auto;
+    overflow: auto;
   }
 }
 
