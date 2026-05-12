@@ -13,18 +13,18 @@ export default async function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <div style={{ textAlign: 'center', padding: '6rem 0' }}>
-        <h1 style={{ textAlign: 'center', fontSize: '5rem', color: '#FFEB43', marginBottom: '1rem' }}>
+      <div style={{ textAlign: 'center', padding: '3rem 0' }}>
+        <h1 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#FFEB43', marginBottom: '1rem' }}>
           🌾 Central Alberta Markets
         </h1>
-        <p style={{ textAlign: 'center', fontSize: '2.5rem', color: '#CCCCCC', marginBottom: '1.5rem' }}>
+        <p style={{ textAlign: 'center', fontSize: '1.25rem', color: '#CCCCCC', marginBottom: '1.5rem' }}>
           Fresh local produce, artisan goods, makers, classic car parts, and community connection
         </p>
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <Link href="/map" style={{ display: 'inline-block', background: '#FFEB43', color: '#003594', padding: '24px 48px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginRight: '20px' }}>
+          <Link href="/map" style={{ display: 'inline-block', background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginRight: '20px' }}>
             🗺️ View Map
           </Link>
-          <Link href="/subscribe" style={{ display: 'inline-block', border: '2px solid #FFEB43', color: '#FFEB43', padding: '24px 48px', borderRadius: '8px', textDecoration: 'none' }}>
+          <Link href="/subscribe" style={{ display: 'inline-block', border: '2px solid #FFEB43', color: '#FFEB43', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
             ⭐ Get Market Max
           </Link>
         </div>
