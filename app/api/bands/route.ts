@@ -1,6 +1,23 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prisma';
 
+export async function GET() {
+  try {
+    // Try to fetch from database
+    let bands: any[] = [];
+    try {
+      bands = await prisma.$queryRaw`SELECT * FROM "Band" ORDER BY "createdAt" DESC`;
+    } catch (dbError) {
+      // Database not available, return empty
+      console.log('Database fetch failed');
+    }
+    return NextResponse.json(bands);
+  } catch (error) {
+    console.error('Bands fetch error:', error);
+    return NextResponse.json([]);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { bandName, contactName, email, phone, genre, description, fee, markets } = await request.json();
