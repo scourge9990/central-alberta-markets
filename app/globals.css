@@ -606,7 +606,7 @@ body {
 /* Ad Sidebars */
 .ad-container {
   position: fixed;
-  top: calc(50% + 200px);
+  top: calc(50% + 120px);
   transform: translateY(-50%);
   width: 320px;
   height: 700px;
