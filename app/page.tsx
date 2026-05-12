@@ -28,10 +28,10 @@ export default async function Home() {
             ⭐ Get Market Max
           </Link>
         </div>
-        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-          <Link href="https://centralalbertaafterdark.com/" target="_blank" rel="noopener" style={{ display: 'inline-block', background: '#FFEB43', color: '#003594', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', marginTop: '1rem' }}>
+        <div style={{ textAlign: 'center', marginTop: '1.5rem', padding: '1rem' }}>
+          <a href="https://centralalbertaafterdark.com/" target="_blank" style={{ fontSize: '1.2rem', color: '#FFEB43', fontWeight: 'bold' }}>
             🌙 Looking for love? Find a First Date Spot →
-          </Link>
+          </a>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1rem' }}>
           <DownloadButton />
