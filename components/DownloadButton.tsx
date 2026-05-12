@@ -1,29 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function DownloadButton() {
-  const [showInfo, setShowInfo] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
 
-  const handleClick = () => {
-    // Detect iOS vs Android
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isAndroid = /Android/.test(navigator.userAgent);
+  useEffect(() => {
+    // Check if already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true);
+    }
     
-    if (isIOS) {
-      // Link to App Store search (no direct link without exact app)
-      window.open('https://apps.apple.com/search?search=Central+Alberta+Markets', '_blank');
-    } else if (isAndroid) {
-      window.open('https://play.google.com/store/search?search=Central+Alberta+Markets', '_blank');
+    // Listen for install prompt
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleClick = async () => {
+    if (isInstalled) {
+      alert('✓ App is already installed!\nLook for "🌾 Central Alberta Markets" on your home screen.');
+      return;
+    }
+    
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+      }
     } else {
-      // Desktop - just show the search links
-      window.open('https://play.google.com/store/search?search=Central+Alberta+Markets', '_blank');
+      // Fallback: show instructions
+      alert('📱 To install:\n\niPhone: Tap Share → "Add to Home Screen"\nAndroid: Tap ⋮ → "Install App"\n\nOr search "Central Alberta Markets" in your app store!');
     }
   };
 
   return (
-    <button onClick={handleClick} style={{ background: 'transparent', border: '1px solid #FFEB43', color: '#FFEB43', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9rem' }}>
-      📱 Download for Mobile
+    <button onClick={handleClick} style={{ 
+      background: isInstalled ? '#22c55e' : 'transparent', 
+      border: '1px solid #FFEB43', 
+      color: '#FFEB43', 
+      padding: '8px 16px', 
+      borderRadius: '4px', 
+      cursor: 'pointer', 
+      fontSize: '0.9rem' 
+    }}>
+      {isInstalled ? '✓ Installed' : '📱 Download for Mobile'}
     </button>
   );
 }

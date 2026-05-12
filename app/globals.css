@@ -674,7 +674,30 @@ body {
 
 @media (max-width: 1200px) {
   .ad-container {
-    display: none;
+    position: relative;
+    top: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 0 0.5rem;
+  }
+  
+  .ad-left,
+  .ad-right {
+    position: relative;
+    left: auto;
+    right: auto;
+  }
+  
+  .ad-frame {
+    width: 100%;
+    max-width: 280px;
+    min-height: 200px;
   }
   
   .main-with-ads {
