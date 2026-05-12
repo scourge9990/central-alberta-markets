@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="footer-content">
               <Link href="/admin">Vendor Login</Link>
               <span className="separator">|</span>
-              <a href="https://central-alberta-after-dark.vercel.app" target="_blank" rel="noopener">
+              <a href="https://centralalbertaafterdark.com/" target="_blank" rel="noopener">
                 Find a First Date Spot 🌙
               </a>
             </div>
