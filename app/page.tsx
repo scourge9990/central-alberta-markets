@@ -29,8 +29,8 @@ export default async function Home() {
           </Link>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1.5rem', padding: '1rem' }}>
-          <a href="https://centralalbertaafterdark.com/" target="_blank" style={{ fontSize: '1.2rem', color: '#FFEB43', fontWeight: 'bold' }}>
-            🌙 Looking for love? Find a First Date Spot →
+          <a href="https://centralalbertaafterdark.com/" target="_blank">
+            🌙 Looking for love? Find a First Date Spot → https://centralalbertaafterdark.com/
           </a>
         </div>
         <div style={{ textAlign: 'center', marginTop: '1rem' }}>
