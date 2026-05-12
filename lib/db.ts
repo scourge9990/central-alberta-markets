@@ -12,7 +12,7 @@ export const fallbackMarkets = [
   { id: 6, name: 'Bentley Farmers Market', city: 'Bentley', address: '5002 Range Rd 20', lat: 52.4638, lng: -114.2598, slug: 'bentley', schedule: [{ day: 'Saturday', startTime: '10:00 AM', endTime: '2:00 PM' }] },
   { id: 7, name: 'Wetaskiwin Farmers Market', city: 'Wetaskiwin', address: '5204 Hwy 2A', lat: 52.9685, lng: -113.3807, slug: 'wetaskiwin', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }] },
   { id: 8, name: 'Stettler Farmers Market', city: 'Stettler', address: 'Stettner Rec Centre', lat: 52.3192, lng: -112.9658, slug: 'stettler', schedule: [{ day: 'Saturday', startTime: '9:00 AM', endTime: '1:00 PM' }] },
-  { id: 9, name: 'TEST Markets Test', city: 'Sundre', address: 'Mountain View County', lat: 51.7983, lng: -114.6394, slug: 'sundre', schedule: [{ day: 'Friday', startTime: '4:00 PM', endTime: '7:00 PM' }] },
+  { id: 9, name: 'Sundre Farmers Market', city: 'Sundre', address: 'Mountain View County', lat: 51.7983, lng: -114.6394, slug: 'sundre', schedule: [{ day: 'Friday', startTime: '4:00 PM', endTime: '7:00 PM' }] },
   { id: 10, name: 'Blackfalds Community Market', city: 'Blackfalds', address: 'Blackfalds Community Centre', lat: 52.3989, lng: -113.8021, slug: 'blackfalds', schedule: [{ day: 'Wednesday', startTime: '3:00 PM', endTime: '7:30 PM' }] },
   // Makers Markets
   { id: 11, name: 'Red Deer Makers Market', city: 'Red Deer', address: 'Hwy 2A', lat: 52.2697, lng: -113.8021, slug: 'red-deer-makers', schedule: [{ day: 'Sunday', startTime: '10:00 AM', endTime: '4:00 PM' }] },
