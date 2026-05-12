@@ -468,7 +468,7 @@ body {
   margin-right: 0.5rem;
 }
 
-/* Responsive */
+/* Responsive - DISABLED to match PC on all devices
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -541,7 +541,7 @@ body {
   }
 }
 
-/* Small phones */
+/* Small phones - DISABLED to match PC */
 @media (max-width: 480px) {
   .logo {
     font-size: 0.9rem;
