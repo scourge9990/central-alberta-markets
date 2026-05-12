@@ -1,5 +1,4 @@
 // Central Alberta Markets - Prisma Schema
-// Matches Central Alberta After Dark database structure
 
 generator client {
   provider = "prisma-client-js"

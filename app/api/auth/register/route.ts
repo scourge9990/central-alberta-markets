@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Simple in-memory user storage (replace with database in production)
-const users: Map<string, { id: number; email: string; name: string; password: string; role: string }> = new Map();
+import { prisma } from '../../lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,7 +10,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email and password required' }, { status: 400 });
     }
 
-    const existingUser = users.get(email);
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    });
 
     if (existingUser) {
       // Verify password
@@ -25,9 +25,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new user
-    const userId = users.size + 1;
-    const user = { id: userId, email, name: name || email.split('@')[0], password, role: 'user' };
-    users.set(email, user);
+    const user = await prisma.user.create({
+      data: {
+        email,
+        name: name || email.split('@')[0],
+        password,
+        role: 'user'
+      }
+    });
 
     return NextResponse.json({ 
       user: { id: user.id, email: user.email, name: user.name, role: user.role } 
