@@ -32,7 +32,7 @@ body {
 
 @media (max-width: 1200px) {
   body {
-    transform: scale(calc(100vw / 1200));
+    zoom: 0.35;
     transform-origin: top center;
     min-width: 1200px;
     overflow-x: auto;
