@@ -107,6 +107,12 @@ export default function LoginPage() {
           <button type={loggedIn ? "button" : "submit"} onClick={(e) => { if (loggedIn) { e.preventDefault(); handleLogout(); } }} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
             {loading ? 'Please wait...' : (loggedIn ? 'Logout' : isLogin ? 'Login' : 'Create Account')}
           </button>
+          
+          {loggedIn && (
+            <Link href="/account" className="btn-secondary" style={{ display: 'block', textAlign: 'center', marginTop: '0.75rem', padding: '0.75rem' }}>
+              My Account
+            </Link>
+          )}
         </form>
 
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)' }}>
