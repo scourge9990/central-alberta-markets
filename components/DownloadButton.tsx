@@ -8,12 +8,10 @@ export function DownloadButton() {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    // Check if already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsInstalled(true);
     }
     
-    // Listen for PWA install prompt
     const handler = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -22,21 +20,28 @@ export function DownloadButton() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  const handleAndroid = () => {
-    // Can't link to Play Store without actual app - open site in new tab
-    window.open('https://centralalbertamarkets.com', '_blank');
+  const handleAndroid = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+      }
+    }
   };
 
   const handleiOS = () => {
-    window.open('https://centralalbertamarkets.com', '_blank');
+    // iOS doesn't support PWA install prompt API - show message
+    alert('iPhone: Tap Share → Add to Home Screen');
   };
 
   const handleMac = () => {
-    window.open('https://centralalbertamarkets.com', '_blank');
+    // Just open in new tab
+    window.open('/', '_blank');
   };
 
   const handleWindows = () => {
-    window.open('https://centralalbertamarkets.com', '_blank');
+    window.open('/', '_blank');
   };
 
   return (
