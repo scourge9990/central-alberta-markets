@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'CentralAlbertaMarkets.ca - Fresh Local Markets',
@@ -23,7 +22,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div className="app">
-          <Header />
+          <header className="header">
+            <div className="header-content">
+              <Link href="/" className="logo">
+                🌾 Central Alberta Markets
+              </Link>
+              <nav className="nav">
+                <Link href="/">Markets</Link>
+                <Link href="/map">Map</Link>
+                <Link href="/fresh">Whats Fresh</Link>
+                <Link href="/vendor-signup">Vendors</Link>
+                <Link href="/register">Register Table</Link>
+                <Link href="/bands">🎸 Bands</Link>
+                <Link href="/subscribe" className="btn-primary">Get Market Max</Link>
+                <Link href="/login" className="btn-secondary">Login</Link>
+              </nav>
+            </div>
+          </header>
           <main className="main">
             {/* Left Ad Frames */}
             <div className="ad-container ad-left">
