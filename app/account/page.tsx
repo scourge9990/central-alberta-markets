@@ -12,6 +12,7 @@ export default function AccountPage() {
   const [success, setSuccess] = useState('');
   const [formData, setFormData] = useState({
     name: '',
+    imageUrl: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
@@ -25,7 +26,7 @@ export default function AccountPage() {
     }
     const userData = JSON.parse(session);
     setUser(userData);
-    setFormData(prev => ({ ...prev, name: userData.name || '' }));
+    setFormData(prev => ({ ...prev, name: userData.name || '', imageUrl: userData.imageUrl || '' }));
   }, [router]);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -41,6 +42,7 @@ export default function AccountPage() {
         body: JSON.stringify({
           userId: user.id,
           name: formData.name,
+          imageUrl: formData.imageUrl || undefined,
           currentPassword: formData.currentPassword || undefined,
           newPassword: formData.newPassword || undefined,
         }),
@@ -109,8 +111,13 @@ export default function AccountPage() {
 
       <div className="card" style={{ maxWidth: '500px', margin: '0 auto' }}>
         {/* Profile Info */}
-        <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px' }}>
-          <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>Account Details</h3>
+        <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px', textAlign: 'center' }}>
+          {user.imageUrl ? (
+            <img src={user.imageUrl} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
+          ) : (
+            <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'var(--surface)', margin: '0 auto 0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>👤</div>
+          )}
+          <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>{user.name || 'No name set'}</h3>
           <p style={{ color: 'var(--text-muted)' }}>Email: {user.email}</p>
           <p style={{ color: 'var(--text-muted)' }}>Role: {user.role}</p>
           <p style={{ color: 'var(--text-muted)' }}>
@@ -132,6 +139,16 @@ export default function AccountPage() {
         )}
 
         <form onSubmit={handleUpdateProfile}>
+          <div className="form-group">
+            <label>Profile Image URL</label>
+            <input
+              type="url"
+              value={formData.imageUrl}
+              onChange={e => setFormData({ ...formData, imageUrl: e.target.value })}
+              placeholder="https://example.com/avatar.jpg"
+            />
+          </div>
+
           <div className="form-group">
             <label>Display Name</label>
             <input
