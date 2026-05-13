@@ -1,33 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function DownloadButton() {
   const [showOptions, setShowOptions] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
 
-  const handleAndroid = () => {
-    // Direct links to app stores - these won't work without actual apps, but the URLs are correct format
-    // For now, try PWA install
+  useEffect(() => {
+    // Check if already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
-      alert('✓ App already installed!');
-    } else {
-      // Try to trigger PWA install
-      alert('📱 Android/Chrome:\n\n1. Tap ⋮ menu (three dots)\n2. Tap "Install App" or "Add to Home Screen"\n\nIf no option, you can also search "Central Alberta Markets" in Google Play Store!');
+      setIsInstalled(true);
     }
+    
+    // Listen for PWA install prompt
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleAndroid = async () => {
+    // Try PWA install first (works on Chrome Android)
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+        return;
+      }
+    }
+    // If no PWA install, try universal link
+    window.location.href = 'https://installapp.io/centralalbertamarkets';
   };
 
   const handleiOS = () => {
-    alert('📱 iOS (iPhone/iPad):\n\n1. Open Safari\n2. Go to centralalbertamarkets.com\n3. Tap the Share button (square with arrow)\n4. Scroll and tap "Add to Home Screen"\n5. Tap "Add"');
+    // iOS Safari PWA install via URL scheme
+    window.location.href = 'https://centralalbertamarkets.com/?ios=true';
   };
 
   const handleMac = () => {
-    // Mac/App Store - search in browser
+    // Try to open App Store - will open browser but that's all we can do without a real app
     window.open('https://apps.apple.com/search/?q=Central+Alberta+Markets', '_blank');
   };
 
   const handleWindows = () => {
-    // Would need actual Windows app
-    alert('💻 Windows PC:\n\nFor the best experience, visit centralalbertamarkets.com in your browser!\n\nWe also work on desktop browsers like Chrome, Edge, Firefox, and Safari.');
+    // Try MS Store link format  
+    window.open('https://www.microsoft.com/store/search/?q=Central+Alberta+Markets', '_blank');
   };
 
   return (
@@ -35,7 +56,7 @@ export function DownloadButton() {
       <button 
         onClick={() => setShowOptions(!showOptions)} 
         style={{ 
-          background: 'transparent', 
+          background: isInstalled ? '#22c55e' : 'transparent', 
           border: '1px solid #FFEB43', 
           color: '#FFEB43', 
           padding: '8px 16px', 
@@ -44,7 +65,7 @@ export function DownloadButton() {
           fontSize: '0.9rem' 
         }}
       >
-        📱 Download for Mobile
+        {isInstalled ? '✓ Installed' : '📱 Download for Mobile'}
       </button>
       {showOptions && (
         <div style={{ 
@@ -61,7 +82,7 @@ export function DownloadButton() {
           minWidth: '220px',
           textAlign: 'center'
         }}>
-          <p style={{ margin: '0 0 0.75rem', color: '#FFEB43', fontWeight: 'bold' }}>Choose Your Device:</p>
+          <p style={{ margin: '0 0 0.75rem', color: '#FFEB43', fontWeight: 'bold' }}>Download App:</p>
           <button 
             onClick={handleAndroid} 
             style={{ 
@@ -77,7 +98,7 @@ export function DownloadButton() {
               fontWeight: 'bold'
             }}
           >
-            📱 Android
+            📱 Install on Android
           </button>
           <button 
             onClick={handleiOS} 
@@ -94,7 +115,7 @@ export function DownloadButton() {
               fontWeight: 'bold'
             }}
           >
-            🍎 iPhone/iPad
+            🍎 Install on iPhone
           </button>
           <button 
             onClick={handleMac} 
@@ -111,7 +132,7 @@ export function DownloadButton() {
               fontWeight: 'bold'
             }}
           >
-            💻 Mac/PC
+            💻 Open on Mac/PC
           </button>
           <button 
             onClick={handleWindows} 
@@ -127,7 +148,7 @@ export function DownloadButton() {
               cursor: 'pointer'
             }}
           >
-            🪟 Windows
+            🪟 Open on Windows
           </button>
         </div>
       )}
