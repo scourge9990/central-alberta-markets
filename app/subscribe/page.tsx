@@ -1,18 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function SubscribePage() {
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (session) {
+      setUser(JSON.parse(session));
+    }
+  }, []);
 
   const handleSubscribe = async () => {
+    if (!user) {
+      alert('Please login first');
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch('/api/stripe/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'customer@test.com' }),
+        body: JSON.stringify({ 
+          email: user.email,
+          userId: user.id
+        }),
       });
       const data = await res.json();
       if (data.url) {
@@ -75,7 +92,7 @@ export default function SubscribePage() {
             onClick={handleSubscribe}
             disabled={loading}
           >
-            {loading ? 'Loading...' : 'Subscribe with Stripe →'}
+            {loading ? 'Loading...' : user ? 'Subscribe with Stripe →' : 'Login to Subscribe'}
           </button>
         </div>
       </div>

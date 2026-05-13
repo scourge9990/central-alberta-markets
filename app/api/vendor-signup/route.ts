@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { prisma } from '../../lib/prisma';
+import { prisma } from '../../../lib/prisma';
 
 // GET - Fetch all vendor applications
 export async function GET(request: NextRequest) {
