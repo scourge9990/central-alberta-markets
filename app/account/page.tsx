@@ -144,7 +144,7 @@ export default function AccountPage() {
         {/* Profile Info */}
         <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px', textAlign: 'center' }}>
           {(formData.imageData || localStorage.getItem('userImage')) ? (
-            <img src={formData.imageData || localStorage.getItem('userImage')} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
+            <img src={formData.imageData || localStorage.getItem('userImage') || ''} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
           ) : (
             <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'var(--surface)', margin: '0 auto 0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>👤</div>
           )}
@@ -187,7 +187,7 @@ export default function AccountPage() {
               }}
             >
               {formData.imageData ? (
-                <img src={formData.imageData} alt="Preview" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={formData.imageData || ''} alt="Preview" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
               ) : (
                 <p style={{ color: 'var(--text-muted)' }}>📷 Drop image here</p>
               )}
