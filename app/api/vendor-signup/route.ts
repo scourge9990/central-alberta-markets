@@ -89,7 +89,7 @@ export async function DELETE(request: NextRequest) {
         where: { id: parseInt(id) }
       });
     } else {
-      await prisma.vendorApplication.delete({
+      await prisma.vendorApplication.deleteMany({
         where: { email: email! }
       });
     }
