@@ -31,7 +31,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/">Markets</Link>
                 <Link href="/map">Map</Link>
                 <Link href="/fresh">Whats Fresh</Link>
-                <Link href="/vendor-signup">Vendors</Link>
+                <Link href="/vendors">Vendors</Link>
+                <Link href="/vendor-signup">Become a Vendor</Link>
                 <Link href="/register">Register Table</Link>
                 <Link href="/bands">🎸 Bands</Link>
                 <Link href="/subscribe" className="btn-primary">Get Market Max</Link>
