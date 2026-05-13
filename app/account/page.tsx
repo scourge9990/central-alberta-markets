@@ -13,10 +13,23 @@ export default function AccountPage() {
   const [formData, setFormData] = useState({
     name: '',
     imageUrl: '',
+    imageData: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
+
+  const handleImageDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const file = e.dataTransfer?.files?.[0] || e.target?.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setFormData(prev => ({ ...prev, imageData: ev.target?.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     const session = localStorage.getItem('userSession');
@@ -26,7 +39,9 @@ export default function AccountPage() {
     }
     const userData = JSON.parse(session);
     setUser(userData);
-    setFormData(prev => ({ ...prev, name: userData.name || '', imageUrl: userData.imageUrl || '' }));
+    // Load saved image from localStorage
+    const savedImage = localStorage.getItem('userImage');
+    setFormData(prev => ({ ...prev, name: userData.name || '', imageUrl: userData.imageUrl || '', imageData: savedImage || '' }));
   }, [router]);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -57,8 +72,12 @@ export default function AccountPage() {
 
       setSuccess('Profile updated successfully!');
       
-      // Update local session
+      // Save to localStorage (including image if uploaded)
       const updatedUser = { ...user, ...data.user };
+      if (formData.imageData) {
+        localStorage.setItem('userImage', formData.imageData);
+        updatedUser.imageUrl = formData.imageData;
+      }
       localStorage.setItem('userSession', JSON.stringify(updatedUser));
       setUser(updatedUser);
       
@@ -112,8 +131,8 @@ export default function AccountPage() {
       <div className="card" style={{ maxWidth: '500px', margin: '0 auto' }}>
         {/* Profile Info */}
         <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px', textAlign: 'center' }}>
-          {user.imageUrl ? (
-            <img src={user.imageUrl} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
+          {(user.imageUrl || formData.imageData || localStorage.getItem('userImage')) ? (
+            <img src={formData.imageData || localStorage.getItem('userImage') || user.imageUrl} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
           ) : (
             <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'var(--surface)', margin: '0 auto 0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>👤</div>
           )}
@@ -140,12 +159,32 @@ export default function AccountPage() {
 
         <form onSubmit={handleUpdateProfile}>
           <div className="form-group">
-            <label>Profile Image URL</label>
+            <label>Profile Picture (drag & drop or click to upload)</label>
+            <div
+              onDrop={handleImageDrop}
+              onDragOver={(e) => e.preventDefault()}
+              onClick={() => document.getElementById('imageInput')?.click()}
+              style={{
+                border: '2px dashed var(--surface)',
+                borderRadius: '8px',
+                padding: '1.5rem',
+                textAlign: 'center',
+                cursor: 'pointer',
+                background: formData.imageData ? 'transparent' : 'var(--surface-light)',
+              }}
+            >
+              {formData.imageData ? (
+                <img src={formData.imageData} alt="Preview" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+              ) : (
+                <p style={{ color: 'var(--text-muted)' }}>📷 Drop image here</p>
+              )}
+            </div>
             <input
-              type="url"
-              value={formData.imageUrl}
-              onChange={e => setFormData({ ...formData, imageUrl: e.target.value })}
-              placeholder="https://example.com/avatar.jpg"
+              id="imageInput"
+              type="file"
+              accept="image/*"
+              onChange={handleImageDrop}
+              style={{ display: 'none' }}
             />
           </div>
 
