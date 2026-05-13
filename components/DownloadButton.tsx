@@ -31,8 +31,8 @@ export function DownloadButton() {
   };
 
   const handleMac = () => {
-    // Open Mac App Store
-    window.location.href = 'macappstore://apps.apple.com';
+    // Go to Mac App Store - REPLACE with your actual app URL
+    window.location.href = 'https://apps.apple.com/ca/app/central-alberta-markets/idYOUR_APP_ID';
   };
 
   const handleWindows = () => {
