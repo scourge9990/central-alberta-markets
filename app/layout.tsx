@@ -3,7 +3,7 @@ import './globals.css';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'CentralAlbertaMarkets.ca - Fresh Local Markets',
+  title: 'CentralAlbertaMarkets.com - Fresh Local Markets',
   description: 'Find the best farmers markets in Central Alberta. Whats fresh this weekend, interactive map, and vendor alerts.',
 };
 
