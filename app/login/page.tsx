@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -35,13 +36,19 @@ export default function LoginPage() {
         return;
       }
 
+      // Show success message first
+      setSuccess('✅ Login successful! Redirecting...');
+      
+      // Save session
+      localStorage.setItem('userSession', JSON.stringify(data.user));
+      
+      // Brief delay to show success message
+      await new Promise(r => setTimeout(r, 1200));
+      
       // Redirect to appropriate dashboard
       if (data.user?.isAdmin || data.user?.isVendor) {
-        // Save session
-        localStorage.setItem('userSession', JSON.stringify(data.user));
         router.push('/admin');
       } else {
-        localStorage.setItem('userSession', JSON.stringify(data.user));
         router.push('/subscribe');
       }
     } catch (err) {
@@ -61,6 +68,12 @@ export default function LoginPage() {
         {error && (
           <div style={{ background: 'rgba(239,68,68,0.2)', border: '1px solid var(--error)', color: 'var(--error)', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem' }}>
             {error}
+          </div>
+        )}
+
+        {success && (
+          <div style={{ background: 'rgba(34,197,94,0.2)', border: '1px solid var(--success)', color: 'var(--success)', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem', fontWeight: 'bold' }}>
+            {success}
           </div>
         )}
 
