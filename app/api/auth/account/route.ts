@@ -64,9 +64,10 @@ export async function PATCH(request: NextRequest) {
         return NextResponse.json({ error: 'Current password required' }, { status: 400 });
       }
 
-      // Verify current password
+      // Verify current password (bcrypt or plaintext)
       const isValid = await compare(currentPassword, user.password);
-      if (!isValid) {
+      const isPlaintext = user.password === currentPassword;
+      if (!isValid && !isPlaintext) {
         return NextResponse.json({ error: 'Current password is incorrect' }, { status: 401 });
       }
 
