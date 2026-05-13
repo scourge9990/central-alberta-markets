@@ -55,7 +55,7 @@ export default function AccountPage() {
     setUser(userData);
     // Load saved image from localStorage
     const savedImage = localStorage.getItem('userImage');
-    setFormData(prev => ({ ...prev, name: userData.name || '', imageUrl: userData.imageUrl || '', imageData: savedImage || '' }));
+    setFormData(prev => ({ ...prev, name: userData.name || '', imageData: savedImage || '' }));
   }, [router]);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -145,8 +145,8 @@ export default function AccountPage() {
       <div className="card" style={{ maxWidth: '500px', margin: '0 auto' }}>
         {/* Profile Info */}
         <div style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px', textAlign: 'center' }}>
-          {(user.imageUrl || formData.imageData || localStorage.getItem('userImage')) ? (
-            <img src={formData.imageData || localStorage.getItem('userImage') || user.imageUrl} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
+          {(formData.imageData || localStorage.getItem('userImage')) ? (
+            <img src={formData.imageData || localStorage.getItem('userImage')} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.5rem' }} />
           ) : (
             <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'var(--surface)', margin: '0 auto 0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>👤</div>
           )}

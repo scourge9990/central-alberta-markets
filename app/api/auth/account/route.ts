@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
-    const { userId, name, imageUrl, currentPassword, newPassword } = body;
+    const { userId, name, currentPassword, newPassword } = body;
 
     if (!userId) {
       return NextResponse.json({ error: 'User ID required' }, { status: 400 });
@@ -56,11 +56,6 @@ export async function PATCH(request: NextRequest) {
     // If changing name
     if (name !== undefined) {
       updateData.name = name;
-    }
-
-    // If changing image
-    if (imageUrl !== undefined) {
-      updateData.imageUrl = imageUrl;
     }
 
     // If changing password
