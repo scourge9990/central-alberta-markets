@@ -1,15 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="50" fill="#003594"/>
-  <!-- Center stalk -->
-  <rect x="48" y="30" width="4" height="40" fill="#FFEB43"/>
-  <!-- Top grain -->
-  <ellipse cx="50" cy="25" rx="7" ry="10" fill="#FFEB43"/>
-  <!-- Left grain angled -->
-  <ellipse cx="30" cy="38" rx="6" ry="9" fill="#FFEB43" transform="rotate(-25 30 38)"/>
-  <!-- Right grain angled -->
-  <ellipse cx="70" cy="38" rx="6" ry="9" fill="#FFEB43" transform="rotate(25 70 38)"/>
-  <!-- Left bottom grain -->
-  <ellipse cx="28" cy="55" rx="5" ry="8" fill="#FFEB43" transform="rotate(-15 28 55)"/>
-  <!-- Right bottom grain -->
-  <ellipse cx="72" cy="55" rx="5" ry="8" fill="#FFEB43" transform="rotate(15 72 55)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <circle cx="90" cy="90" r="90" fill="#003594"/>
+  <circle cx="90" cy="90" r="82" fill="none" stroke="#FFEB43" stroke-width="5"/>
+  <text x="90" y="115" font-size="100" text-anchor="middle" fill="#FFEB43">🌾</text>
 </svg>
