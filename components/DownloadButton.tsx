@@ -22,33 +22,21 @@ export function DownloadButton() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  const handleAndroid = async () => {
-    // Try PWA install first (works on Chrome Android)
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        setIsInstalled(true);
-        return;
-      }
-    }
-    // If no PWA install, try universal link
-    window.location.href = 'https://installapp.io/centralalbertamarkets';
+  const handleAndroid = () => {
+    // Can't link to Play Store without actual app - open site in new tab
+    window.open('https://centralalbertamarkets.com', '_blank');
   };
 
   const handleiOS = () => {
-    // iOS Safari PWA install via URL scheme
-    window.location.href = 'https://centralalbertamarkets.com/?ios=true';
+    window.open('https://centralalbertamarkets.com', '_blank');
   };
 
   const handleMac = () => {
-    // Try to open App Store - will open browser but that's all we can do without a real app
-    window.open('https://apps.apple.com/search/?q=Central+Alberta+Markets', '_blank');
+    window.open('https://centralalbertamarkets.com', '_blank');
   };
 
   const handleWindows = () => {
-    // Try MS Store link format  
-    window.open('https://www.microsoft.com/store/search/?q=Central+Alberta+Markets', '_blank');
+    window.open('https://centralalbertamarkets.com', '_blank');
   };
 
   return (
