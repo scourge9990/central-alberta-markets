@@ -37,8 +37,11 @@ export default function LoginPage() {
 
       // Redirect to appropriate dashboard
       if (data.user?.isAdmin || data.user?.isVendor) {
+        // Save session
+        localStorage.setItem('userSession', JSON.stringify(data.user));
         router.push('/admin');
       } else {
+        localStorage.setItem('userSession', JSON.stringify(data.user));
         router.push('/subscribe');
       }
     } catch (err) {
