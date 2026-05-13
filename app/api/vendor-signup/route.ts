@@ -84,10 +84,15 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Delete by ID or email
-    const where = id ? { id: parseInt(id) } : { email };
-    await prisma.vendorApplication.delete({
-      where
-    });
+    if (id) {
+      await prisma.vendorApplication.delete({
+        where: { id: parseInt(id) }
+      });
+    } else {
+      await prisma.vendorApplication.delete({
+        where: { email: email! }
+      });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
