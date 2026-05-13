@@ -1,51 +1,34 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export function DownloadButton() {
-  const [showOptions, setShowOptions] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-    }
-    
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
+  const [showInfo, setShowInfo] = useState(false);
 
   const handleAndroid = () => {
-    // Go to Google Play Store - REPLACE with your actual app URL
-    window.location.href = 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME';
+    // Go to Play Store search
+    window.open('https://play.google.com/store/apps/details?id=com.centralalbertamarkets', '_blank');
   };
 
   const handleiOS = () => {
-    // Go to App Store - REPLACE with your actual app URL
-    window.location.href = 'https://apps.apple.com/app/YOUR_APP_ID';
+    // Go to App Store - need actual app ID
+    window.open('https://apps.apple.com/app/central-alberta-markets/id000000000', '_blank');
   };
 
   const handleMac = () => {
-    // Go to Mac App Store - REPLACE with your actual app URL
-    window.location.href = 'https://apps.apple.com/ca/app/central-alberta-markets/idYOUR_APP_ID';
+    window.open('https://apps.apple.com/ca/app/central-alberta-markets/id000000000', '_blank');
   };
 
   const handleWindows = () => {
-    // Open Microsoft Store
-    window.location.href = 'ms-windows-store://search?query=Central+Alberta+Markets';
+    window.open('https://play.google.com/store/apps/details?id=com.centralalbertamarkets', '_blank');
   };
 
   return (
     <div style={{ display: 'inline-block', position: 'relative' }}>
       <button 
-        onClick={() => setShowOptions(!showOptions)} 
+        onClick={() => setShowInfo(!showInfo)} 
         style={{ 
-          background: isInstalled ? '#22c55e' : 'transparent', 
+          background: 'transparent', 
           border: '1px solid #FFEB43', 
           color: '#FFEB43', 
           padding: '8px 16px', 
@@ -54,9 +37,9 @@ export function DownloadButton() {
           fontSize: '0.9rem' 
         }}
       >
-        {isInstalled ? '✓ Installed' : '📱 Download for Mobile'}
+        📱 Download for Mobile
       </button>
-      {showOptions && (
+      {showInfo && (
         <div style={{ 
           position: 'absolute', 
           top: '100%', 
@@ -71,73 +54,14 @@ export function DownloadButton() {
           minWidth: '220px',
           textAlign: 'center'
         }}>
-          <p style={{ margin: '0 0 0.75rem', color: '#FFEB43', fontWeight: 'bold' }}>Download App:</p>
-          <button 
-            onClick={handleAndroid} 
-            style={{ 
-              display: 'block', 
-              width: '100%', 
-              margin: '0.5rem 0', 
-              padding: '10px', 
-              background: '#22c55e', 
-              border: 'none', 
-              borderRadius: '4px', 
-              color: 'white', 
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
-          >
-            📱 Install on Android
+          <button onClick={handleAndroid} style={{ display: 'block', width: '100%', margin: '0.5rem 0', padding: '10px', background: '#22c55e', border: 'none', borderRadius: '4px', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
+            📱 Android
           </button>
-          <button 
-            onClick={handleiOS} 
-            style={{ 
-              display: 'block', 
-              width: '100%', 
-              margin: '0.5rem 0', 
-              padding: '10px', 
-              background: '#666', 
-              border: 'none', 
-              borderRadius: '4px', 
-              color: 'white', 
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
-          >
-            🍎 Install on iPhone
+          <button onClick={handleiOS} style={{ display: 'block', width: '100%', margin: '0.5rem 0', padding: '10px', background: '#666', border: 'none', borderRadius: '4px', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
+            🍎 iPhone/iPad
           </button>
-          <button 
-            onClick={handleMac} 
-            style={{ 
-              display: 'block', 
-              width: '100%', 
-              margin: '0.5rem 0', 
-              padding: '10px', 
-              background: '#007AFF', 
-              border: 'none', 
-              borderRadius: '4px', 
-              color: 'white', 
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
-          >
-            💻 Open on Mac/PC
-          </button>
-          <button 
-            onClick={handleWindows} 
-            style={{ 
-              display: 'block', 
-              width: '100%', 
-              margin: '0.5rem 0', 
-              padding: '10px', 
-              background: 'transparent', 
-              border: '1px solid #888', 
-              borderRadius: '4px', 
-              color: '#ccc', 
-              cursor: 'pointer'
-            }}
-          >
-            🪟 Open on Windows
+          <button onClick={handleMac} style={{ display: 'block', width: '100%', margin: '0.5rem 0', padding: '10px', background: '#007AFF', border: 'none', borderRadius: '4px', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
+            💻 Mac
           </button>
         </div>
       )}
