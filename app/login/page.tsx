@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -9,11 +9,23 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     username: '',
   });
+
+  // Check for existing session on page load
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (session) {
+      const user = JSON.parse(session);
+      setLoggedIn(true);
+      setUserEmail(user.email || '');
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,31 +44,55 @@ export default function LoginPage() {
 
       if (!res.ok) {
         setError(data.error || 'Something went wrong');
+        setLoading(false);
         return;
       }
 
-      // Redirect to appropriate dashboard
-      if (data.user?.isAdmin || data.user?.isVendor) {
-        // Save session
-        localStorage.setItem('userSession', JSON.stringify(data.user));
-        router.push('/admin');
-      } else {
-        localStorage.setItem('userSession', JSON.stringify(data.user));
-        router.push('/subscribe');
-      }
+      // Save session and show logged in state
+      localStorage.setItem('userSession', JSON.stringify(data.user));
+      setLoggedIn(true);
+      setUserEmail(formData.email);
+      setLoading(false);
     } catch (err) {
       setError('Network error. Please try again.');
-    } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userSession');
+    setLoggedIn(false);
+    setUserEmail('');
+    setFormData({ email: '', password: '', username: '' });
   };
 
   return (
     <div style={{ maxWidth: '450px', margin: '0 auto' }}>
       <div className="card">
-        <h2 style={{ color: 'var(--primary)', textAlign: 'center', marginBottom: '1.5rem' }}>
-          {isLogin ? '🔐 Login' : '📝 Create Account'}
-        </h2>
+        {loggedIn ? (
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{ color: 'var(--success)', textAlign: 'center', marginBottom: '1.5rem' }}>
+              ✅ Logged In
+            </h2>
+            <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>
+              Welcome! You're logged in as:
+            </p>
+            <p style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '2rem' }}>
+              {userEmail}
+            </p>
+            <button 
+              onClick={handleLogout}
+              className="btn-primary"
+              style={{ width: '100%', background: 'var(--error)' }}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <>
+            <h2 style={{ color: 'var(--primary)', textAlign: 'center', marginBottom: '1.5rem' }}>
+              {isLogin ? '🔐 Login' : '📝 Create Account'}
+            </h2>
 
         {error && (
           <div style={{ background: 'rgba(239,68,68,0.2)', border: '1px solid var(--error)', color: 'var(--error)', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem' }}>
@@ -121,6 +157,8 @@ export default function LoginPage() {
             ⭐ Get Market Max
           </Link>
         </p>
+          </>
+        )}
       </div>
     </div>
   );
