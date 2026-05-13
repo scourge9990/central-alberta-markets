@@ -43,6 +43,7 @@ export default function LoginPage() {
 
       localStorage.setItem('userSession', JSON.stringify(data.user));
       setLoggedIn(true);
+      router.push('/'); // Go back to home after login
     } catch (err) {
       setError('Network error. Please try again.');
     } finally {
