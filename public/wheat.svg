@@ -1,17 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="48" fill="#003594" stroke="#FFEB43" stroke-width="3"/>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#003594"/>
+      <stop offset="100%" stop-color="#002a70"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#bg)" stroke="#FFEB43" stroke-width="2.5"/>
   <g fill="#FFEB43">
-    <!-- Stem -->
-    <rect x="47" y="30" width="6" height="45"/>
-    <!-- Top grain -->
-    <ellipse cx="50" cy="28" rx="10" ry="8"/>
-    <!-- Left grain -->
-    <ellipse cx="35" cy="40" rx="8" ry="10" transform="rotate(-30 35 40)"/>
-    <!-- Right grain -->
-    <ellipse cx="65" cy="40" rx="8" ry="10" transform="rotate(30 65 40)"/>
-    <!-- Left lower grain -->
-    <ellipse cx="32" cy="58" rx="7" ry="9" transform="rotate(-20 32 58)"/>
-    <!-- Right lower grain -->
-    <ellipse cx="68" cy="58" rx="7" ry="9" transform="rotate(20 68 58)"/>
+    <path d="M50 25 L47 30 L53 30 Z" transform="translate(0,5)"/>
+    <ellipse cx="50" cy="25" rx="8" ry="12"/>
+    <ellipse cx="32" cy="35" rx="7" ry="10" transform="rotate(-35 32 35)"/>
+    <ellipse cx="68" cy="35" rx="7" ry="10" transform="rotate(35 68 35)"/>
+    <ellipse cx="28" cy="52" rx="6" ry="9" transform="rotate(-25 28 52)"/>
+    <ellipse cx="72" cy="52" rx="6" ry="9" transform="rotate(25 72 52)"/>
+    <rect x="48" y="30" width="4" height="45"/>
   </g>
 </svg>
