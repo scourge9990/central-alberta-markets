@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
-import { compare } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,8 +21,20 @@ export async function POST(request: NextRequest) {
 
     // Verify password with bcrypt
     const isValidPassword = await compare(password, user.password);
-    if (!isValidPassword) {
+    
+    // Also check plaintext (legacy accounts)
+    const isPlaintext = user.password === password;
+    
+    if (!isValidPassword && !isPlaintext) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+    }
+
+    // Migrate plaintext to bcrypt if needed
+    if (isPlaintext) {
+      await prisma.user.update({
+        where: { email },
+        data: { password: await hash(password, 12) }
+      });
     }
 
     return NextResponse.json({ 
