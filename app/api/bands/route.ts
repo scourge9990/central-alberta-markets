@@ -47,3 +47,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: 'Failed to submit application' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const email = searchParams.get('email');
+
+    if (!id && !email) {
+      return NextResponse.json({ error: 'ID or email required' }, { status: 400 });
+    }
+
+    try {
+      if (id) {
+        await prisma.$executeRaw`DELETE FROM "Band" WHERE id = ${parseInt(id)}`;
+      } else {
+        await prisma.$executeRaw`DELETE FROM "Band" WHERE email = ${email}`;
+      }
+      return NextResponse.json({ success: true });
+    } catch (dbError) {
+      console.log('Delete failed:', dbError);
+      return NextResponse.json({ success: false }, { status: 500 });
+    }
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+  }
+}

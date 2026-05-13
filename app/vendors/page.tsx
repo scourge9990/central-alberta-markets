@@ -18,8 +18,16 @@ interface Vendor {
 export default function VendorsPage() {
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    // Check login
+    const session = localStorage.getItem('userSession');
+    if (session) setUser(JSON.parse(session));
+    loadVendors();
+  }, []);
+
+  const loadVendors = () => {
     fetch('/api/vendor-signup')
       .then(res => res.json())
       .then(data => {
@@ -27,7 +35,19 @@ export default function VendorsPage() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  };
+
+  const handleWithdraw = async (vendor: Vendor) => {
+    if (!confirm(`Are you sure you want to withdraw ${vendor.businessName}?`)) return;
+    
+    const res = await fetch(`/api/vendor-signup?id=${vendor.id}`, { method: 'DELETE' });
+    if (res.ok) {
+      alert('Successfully withdrawn');
+      loadVendors();
+    } else {
+      alert('Failed to withdraw');
+    }
+  };
 
   return (
     <div>
@@ -59,6 +79,22 @@ export default function VendorsPage() {
                 <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--primary)' }}>
                   📍 {typeof vendor.markets === 'string' ? JSON.parse(vendor.markets).join(', ') : vendor.markets}
                 </p>
+              )}
+              {user && user.email === vendor.email && (
+                <button
+                  onClick={() => handleWithdraw(vendor)}
+                  style={{
+                    marginTop: '1rem',
+                    padding: '0.5rem 1rem',
+                    background: '#dc3545',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Withdraw from Market
+                </button>
               )}
             </div>
           ))}

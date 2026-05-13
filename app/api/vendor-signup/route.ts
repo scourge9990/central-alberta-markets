@@ -71,3 +71,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: 'Failed to submit application' }, { status: 500 });
   }
 }
+
+// DELETE - Vendor withdraws their application
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const email = searchParams.get('email');
+
+    if (!id && !email) {
+      return NextResponse.json({ error: 'ID or email required' }, { status: 400 });
+    }
+
+    // Delete by ID or email
+    const where = id ? { id: parseInt(id) } : { email };
+    await prisma.vendorApplication.delete({
+      where
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Delete error:', error);
+    return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+  }
+}
