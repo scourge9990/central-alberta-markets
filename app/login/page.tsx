@@ -104,7 +104,7 @@ export default function LoginPage() {
             />
           </div>
 
-          <button type={loggedIn ? "button" : "submit"} onClick={loggedIn ? handleLogout : undefined} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
+          <button type={loggedIn ? "button" : "submit"} onClick={(e) => { if (loggedIn) { e.preventDefault(); handleLogout(); } }} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
             {loading ? 'Please wait...' : (loggedIn ? 'Logout' : isLogin ? 'Login' : 'Create Account')}
           </button>
         </form>
