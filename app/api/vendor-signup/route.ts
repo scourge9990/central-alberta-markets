@@ -1,7 +1,21 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { prisma } from '../../lib/prisma';
 
+// GET - Fetch all vendor applications
+export async function GET(request: NextRequest) {
+  try {
+    const applications = await prisma.vendorApplication.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    return NextResponse.json({ applications });
+  } catch (error) {
+    console.error('Error:', error);
+    return NextResponse.json({ error: 'Failed to fetch applications' }, { status: 500 });
+  }
+}
+
+// POST - Submit new vendor application
 export async function POST(request: Request) {
   try {
     const body = await request.json();

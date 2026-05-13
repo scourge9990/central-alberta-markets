@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const mockVendorItems = [
   { id: 1, name: 'Fresh Lettuce', category: 'Produce', price: '$4.99', unit: 'per bunch', available: true },
@@ -16,6 +16,34 @@ const mockVendorItems = [
 export default function VendorDashboard() {
   const [items, setItems] = useState(mockVendorItems);
   const [activeTab, setActiveTab] = useState('items');
+  const [applications, setApplications] = useState<any[]>([]);
+  const [loadingApps, setLoadingApps] = useState(false);
+
+  // Fetch applications when tab is selected
+  useEffect(() => {
+    if (activeTab === 'applications') {
+      setLoadingApps(true);
+      fetch('/api/vendor-signup')
+        .then(res => res.json())
+        .then(data => {
+          setApplications(data.applications || []);
+          setLoadingApps(false);
+        })
+        .catch(() => setLoadingApps(false));
+    }
+  }, [activeTab]);
+
+  const handleApprove = async (id: number) => {
+    await fetch(`/api/vendor-signup/${id}`, { method: 'PATCH' });
+    setApplications(applications.map(app => 
+      app.id === id ? { ...app, status: 'approved' } : app
+    ));
+  };
+
+  const handleReject = async (id: number) => {
+    await fetch(`/api/vendor-signup/${id}`, { method: 'DELETE' });
+    setApplications(applications.filter(app => app.id !== id));
+  };
 
   const toggleAvailability = (id: number) => {
     setItems(items.map(item => 
@@ -40,6 +68,9 @@ export default function VendorDashboard() {
           <ul>
             <li className={activeTab === 'items' ? 'active' : ''} onClick={() => setActiveTab('items')}>
               📦 Today's Items ({availableCount})
+            </li>
+            <li className={activeTab === 'applications' ? 'active' : ''} onClick={() => setActiveTab('applications')}>
+              🏪 Vendor Applications
             </li>
             <li className={activeTab === 'alerts' ? 'active' : ''} onClick={() => setActiveTab('alerts')}>
               🔔 Customer Alerts
@@ -105,6 +136,78 @@ export default function VendorDashboard() {
                   <li>Add your social media links to attract more customers</li>
                 </ul>
               </div>
+            </div>
+          )}
+
+          {activeTab === 'applications' && (
+            <div>
+              <h2>🏪 Vendor Applications</h2>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+                Review and approve vendor applications to sell at your market.
+              </p>
+              
+              {loadingApps ? (
+                <p>Loading...</p>
+              ) : applications.length === 0 ? (
+                <div style={{ background: 'var(--surface-light)', padding: '2rem', borderRadius: '8px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                  No vendor applications yet. Share the vendor signup page to attract sellers!
+                </div>
+              ) : (
+                <div style={{ display: 'grid', gap: '1rem' }}>
+                  {applications.map(app => (
+                    <div key={app.id} className="item-card">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                        <div>
+                          <div style={{ fontWeight: 'bold', color: 'var(--primary)', fontSize: '1.1rem' }}>{app.businessName}</div>
+                          <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+                            👤 {app.contactName} • 📧 {app.email}
+                            {app.phone && ` • 📞 ${app.phone}`}
+                          </div>
+                          {app.description && (
+                            <div style={{ marginTop: '0.5rem' }}>🥕 {app.description}</div>
+                          )}
+                          {app.markets && (
+                            <div style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+                              📍 {JSON.parse(app.markets).join(', ')}
+                            </div>
+                          )}
+                          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+                            Submitted: {new Date(app.createdAt).toLocaleDateString()}
+                          </div>
+                        </div>
+                        <span style={{ 
+                          padding: '0.25rem 0.75rem', 
+                          borderRadius: '20px',
+                          fontSize: '0.8rem',
+                          background: app.status === 'approved' ? 'var(--success)' : 'var(--primary)',
+                          color: 'var(--bg)'
+                        }}>
+                          {app.status}
+                        </span>
+                      </div>
+                      
+                      {app.status === 'pending' && (
+                        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+                          <button 
+                            onClick={() => handleApprove(app.id)}
+                            className="btn-primary"
+                            style={{ flex: 1, background: 'var(--success)', cursor: 'pointer' }}
+                          >
+                            ✅ Approve
+                          </button>
+                          <button 
+                            onClick={() => handleReject(app.id)}
+                            className="btn-primary"
+                            style={{ flex: 1, background: 'var(--error)', cursor: 'pointer' }}
+                          >
+                            ❌ Reject
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
