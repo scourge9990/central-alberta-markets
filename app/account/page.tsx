@@ -277,6 +277,46 @@ export default function AccountPage() {
         <Link href="/subscribe" style={{ color: 'var(--primary)' }}>
           ⭐ Manage Subscription
         </Link>
+        <br /><br />
+        <button
+          type="button"
+          onClick={async () => {
+            if (!confirm('Are you sure you want to cancel your subscription? You will lose Market Max benefits.')) return;
+            setLoading(true);
+            try {
+              const res = await fetch(`/api/stripe/cancel?userId=${user.id}`, { method: 'POST' });
+              const data = await res.json();
+              if (res.ok) {
+                setSuccess('Subscription cancelled. You will be refunded on your next billing date.');
+                // Refresh user data
+                const session = localStorage.getItem('userSession');
+                if (session) {
+                  const updated = JSON.parse(session);
+                  updated.subscription = null;
+                  localStorage.setItem('userSession', JSON.stringify(updated));
+                  setUser(updated);
+                }
+              } else {
+                setError(data.error || 'Failed to cancel subscription');
+              }
+            } catch (err) {
+              setError('Something went wrong');
+            } finally {
+              setLoading(false);
+            }
+          }}
+          disabled={loading}
+          style={{ 
+            background: 'transparent', 
+            border: 'none', 
+            color: 'var(--error)', 
+            cursor: loading ? 'not-allowed' : 'pointer',
+            textDecoration: 'underline',
+            fontSize: '0.9rem'
+          }}
+        >
+          Cancel Subscription
+        </button>
       </div>
     </div>
   );
