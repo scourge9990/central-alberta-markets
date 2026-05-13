@@ -12,7 +12,6 @@ export default function AccountPage() {
   const [success, setSuccess] = useState('');
   const [formData, setFormData] = useState({
     name: '',
-    imageUrl: '',
     imageData: '',
     currentPassword: '',
     newPassword: '',
@@ -71,7 +70,6 @@ export default function AccountPage() {
         body: JSON.stringify({
           userId: user.id,
           name: formData.name,
-          imageUrl: formData.imageUrl || undefined,
           currentPassword: formData.currentPassword || undefined,
           newPassword: formData.newPassword || undefined,
         }),
@@ -86,12 +84,12 @@ export default function AccountPage() {
 
       setSuccess('Profile updated successfully!');
       
-      // Save to localStorage (including image if uploaded)
-      const updatedUser = { ...user, ...data.user };
+      // Save image to localStorage if uploaded
       if (formData.imageData) {
         localStorage.setItem('userImage', formData.imageData);
-        updatedUser.imageUrl = formData.imageData;
       }
+      
+      const updatedUser = { ...user, ...data.user };
       localStorage.setItem('userSession', JSON.stringify(updatedUser));
       setUser(updatedUser);
       
