@@ -2,16 +2,29 @@ import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { prisma } from '../../lib/prisma';
 
-// GET - Fetch all vendor applications
+// GET - Fetch approved vendors by market name
 export async function GET(request: NextRequest) {
   try {
-    const applications = await prisma.vendorApplication.findMany({
+    const { searchParams } = new URL(request.url);
+    const market = searchParams.get('market');
+    
+    let where = {};
+    if (market) {
+      const markets = JSON.parse(market);
+      where = { status: 'approved', markets: { contains: markets[0] } };
+    } else {
+      where = { status: 'approved' };
+    }
+    
+    const vendors = await prisma.vendorApplication.findMany({
+      where,
       orderBy: { createdAt: 'desc' }
     });
-    return NextResponse.json({ applications });
+    
+    return NextResponse.json({ vendors });
   } catch (error) {
     console.error('Error:', error);
-    return NextResponse.json({ error: 'Failed to fetch applications' }, { status: 500 });
+    return NextResponse.json({ vendors: [] }, { status: 200 });
   }
 }
 
@@ -62,7 +75,6 @@ export async function POST(request: Request) {
       await transporter.sendMail(mailOptions);
     } catch (emailError) {
       console.error('Email error:', emailError);
-      // Continue even if email fails - data is saved
     }
 
     return NextResponse.json({ success: true, message: 'Application submitted successfully!' });

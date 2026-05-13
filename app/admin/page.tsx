@@ -23,7 +23,7 @@ export default function VendorDashboard() {
   useEffect(() => {
     if (activeTab === 'applications') {
       setLoadingApps(true);
-      fetch('/api/vendor-signup')
+      fetch('/api/vendor-applications')
         .then(res => res.json())
         .then(data => {
           setApplications(data.applications || []);
@@ -34,14 +34,18 @@ export default function VendorDashboard() {
   }, [activeTab]);
 
   const handleApprove = async (id: number) => {
-    await fetch(`/api/vendor-signup/${id}`, { method: 'PATCH' });
+    await fetch('/api/vendor-applications', { 
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }) 
+    });
     setApplications(applications.map(app => 
       app.id === id ? { ...app, status: 'approved' } : app
     ));
   };
 
   const handleReject = async (id: number) => {
-    await fetch(`/api/vendor-signup/${id}`, { method: 'DELETE' });
+    await fetch(`/api/vendor-applications?id=${id}`, { method: 'DELETE' });
     setApplications(applications.filter(app => app.id !== id));
   };
 
