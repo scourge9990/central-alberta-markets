@@ -19,10 +19,24 @@ export default function AccountPage() {
     confirmPassword: '',
   });
 
-  const handleImageDrop = (e: React.DragEvent) => {
+  const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const file = e.dataTransfer?.files?.[0] || e.target?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
+    e.stopPropagation();
+    const file = e.dataTransfer?.files?.[0];
+    if (!file) return;
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setFormData(prev => ({ ...prev, imageData: ev.target?.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target?.files?.[0];
+    if (!file) return;
+    if (file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (ev) => {
         setFormData(prev => ({ ...prev, imageData: ev.target?.result as string }));
@@ -163,6 +177,7 @@ export default function AccountPage() {
             <div
               onDrop={handleImageDrop}
               onDragOver={(e) => e.preventDefault()}
+              onDragEnter={(e) => e.preventDefault()}
               onClick={() => document.getElementById('imageInput')?.click()}
               style={{
                 border: '2px dashed var(--surface)',
@@ -183,7 +198,7 @@ export default function AccountPage() {
               id="imageInput"
               type="file"
               accept="image/*"
-              onChange={handleImageDrop}
+              onChange={handleImageFile}
               style={{ display: 'none' }}
             />
           </div>
