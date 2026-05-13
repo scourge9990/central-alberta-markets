@@ -69,40 +69,44 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div className="form-group">
-              <label>Username</label>
-              <input
-                type="text"
-                value={formData.username}
-                onChange={e => setFormData({ ...formData, username: e.target.value })}
-                placeholder="3-20 characters"
-                required
-              />
-            </div>
+          {!loggedIn && (
+            <>
+              {!isLogin && (
+                <div className="form-group">
+                  <label>Username</label>
+                  <input
+                    type="text"
+                    value={formData.username}
+                    onChange={e => setFormData({ ...formData, username: e.target.value })}
+                    placeholder="3-20 characters"
+                    required
+                  />
+                </div>
+              )}
+
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Password</label>
+                <input
+                  type="password"
+                  value={formData.password}
+                  onChange={e => setFormData({ ...formData, password: e.target.value })}
+                  placeholder="Min 8 characters"
+                  required
+                />
+              </div>
+            </>
           )}
-
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={e => setFormData({ ...formData, email: e.target.value })}
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={e => setFormData({ ...formData, password: e.target.value })}
-              placeholder="Min 8 characters"
-              required
-            />
-          </div>
 
           <button type={loggedIn ? "button" : "submit"} onClick={(e) => { if (loggedIn) { e.preventDefault(); handleLogout(); } }} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
             {loading ? 'Please wait...' : (loggedIn ? 'Logout' : isLogin ? 'Login' : 'Create Account')}
@@ -115,16 +119,18 @@ export default function LoginPage() {
           )}
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)' }}>
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <button
-            type="button"
-            onClick={() => { setIsLogin(!isLogin); setError(''); }}
-            style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', textDecoration: 'underline' }}
-          >
-            {isLogin ? 'Sign up' : 'Login'}
-          </button>
-        </p>
+        {!loggedIn && (
+          <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)' }}>
+            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            <button
+              type="button"
+              onClick={() => { setIsLogin(!isLogin); setError(''); }}
+              style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              {isLogin ? 'Sign up' : 'Login'}
+            </button>
+          </p>
+        )}
 
         <p style={{ textAlign: 'center', marginTop: '1rem' }}>
           <Link href="/subscribe" style={{ color: 'var(--primary)' }}>
