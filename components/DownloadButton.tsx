@@ -20,28 +20,24 @@ export function DownloadButton() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  const handleAndroid = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        setIsInstalled(true);
-      }
-    }
+  const handleAndroid = () => {
+    // Go to Google Play Store - REPLACE with your actual app URL
+    window.location.href = 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME';
   };
 
   const handleiOS = () => {
-    // iOS doesn't support PWA install prompt API - show message
-    alert('iPhone: Tap Share → Add to Home Screen');
+    // Go to App Store - REPLACE with your actual app URL
+    window.location.href = 'https://apps.apple.com/app/YOUR_APP_ID';
   };
 
   const handleMac = () => {
-    // Just open in new tab
-    window.open('/', '_blank');
+    // Open Mac App Store
+    window.location.href = 'macappstore://apps.apple.com';
   };
 
   const handleWindows = () => {
-    window.open('/', '_blank');
+    // Open Microsoft Store
+    window.location.href = 'ms-windows-store://search?query=Central+Alberta+Markets';
   };
 
   return (
