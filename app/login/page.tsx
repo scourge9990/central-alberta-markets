@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -9,11 +9,17 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     username: '',
   });
+
+  // Check session on load
+  useEffect(() => {
+    if (localStorage.getItem('userSession')) setLoggedIn(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,20 +41,18 @@ export default function LoginPage() {
         return;
       }
 
-      // Redirect to appropriate dashboard
-      if (data.user?.isAdmin || data.user?.isVendor) {
-        // Save session
-        localStorage.setItem('userSession', JSON.stringify(data.user));
-        router.push('/admin');
-      } else {
-        localStorage.setItem('userSession', JSON.stringify(data.user));
-        router.push('/subscribe');
-      }
+      localStorage.setItem('userSession', JSON.stringify(data.user));
+      setLoggedIn(true);
     } catch (err) {
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userSession');
+    setLoggedIn(false);
   };
 
   return (
@@ -100,8 +104,8 @@ export default function LoginPage() {
             />
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
-            {loading ? 'Please wait...' : isLogin ? 'Login' : 'Create Account'}
+          <button type={loggedIn ? "button" : "submit"} onClick={loggedIn ? handleLogout : undefined} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={loading}>
+            {loading ? 'Please wait...' : (loggedIn ? 'Logout' : isLogin ? 'Login' : 'Create Account')}
           </button>
         </form>
 
