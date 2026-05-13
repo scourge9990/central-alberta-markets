@@ -1,5 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-  <circle cx="90" cy="90" r="90" fill="#003594"/>
-  <circle cx="90" cy="90" r="82" fill="none" stroke="#FFEB43" stroke-width="5"/>
-  <text x="90" y="115" font-size="100" text-anchor="middle" fill="#FFEB43">🌾</text>
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="90" cy="90" r="85"/>
+    </clipPath>
+  </defs>
+  <!-- Blue circle -->
+  <circle cx="90" cy="90" r="88" fill="#003594"/>
+  <!-- Yellow ring -->
+  <circle cx="90" cy="90" r="82" fill="none" stroke="#FFEB43" stroke-width="6"/>
+  <!-- Wheat drawn as shapes -->
+  <g fill="#FFEB43" clip-path="url(#circleClip)">
+    <!-- Center stem -->
+    <rect x="87" y="40" width="6" height="100"/>
+    <!-- Top kernel -->
+    <ellipse cx="90" cy="40" rx="14" ry="18"/>
+    <!-- Upper left -->
+    <ellipse cx="55" cy="55" rx="12" ry="16" transform="rotate(-35 55 55)"/>
+    <!-- Upper right -->
+    <ellipse cx="125" cy="55" rx="12" ry="16" transform="rotate(35 125 55)"/>
+    <!-- Middle left -->
+    <ellipse cx="48" cy="85" rx="11" ry="15" transform="rotate(-25 48 85)"/>
+    <!-- Middle right -->
+    <ellipse cx="132" cy="85" rx="11" ry="15" transform="rotate(25 132 85)"/>
+    <!-- Lower left -->
+    <ellipse cx="52" cy="115" rx="10" ry="14" transform="rotate(-15 52 115)"/>
+    <!-- Lower right -->
+    <ellipse cx="128" cy="115" rx="10" ry="14" transform="rotate(15 128 115)"/>
+  </g>
 </svg>
