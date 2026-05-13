@@ -2,13 +2,29 @@ import Link from 'next/link';
 import { fallbackMarkets, freshItems } from '@/lib/db';
 import { DownloadButton } from '@/components/DownloadButton';
 
-export const revalidate = 60;
+export const revalidate = 30;
+
+async function getAllReservations() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ''}/api/registrations/all`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.reservations || [];
+  } catch {
+    return [];
+  }
+}
 
 export default async function Home() {
-  // Using fallback data for now (matches your Central Alberta After Dark setup)
-  // Database integration ready when you connect PostgreSQL
+  // Fetch registrations from DB
+  const reservations = await getAllReservations();
   
-  const displayMarkets = fallbackMarkets;
+  // Group by market
+  const byMarket = reservations.reduce((acc: any, r: any) => {
+    if (!acc[r.marketId]) acc[r.marketId] = [];
+    acc[r.marketId].push(r);
+    return acc;
+  }, {});
 
   return (
     <div>
@@ -42,21 +58,45 @@ export default async function Home() {
       <section>
         <h2 className="section-title">All Central Alberta Markets</h2>
         <div className="markets-grid">
-          {displayMarkets.map((market: any) => (
-            <Link href={market.isBands ? '/bands-listing' : `/market/${market.slug}`} key={market.id} className={market.isBands ? 'market-card bands-card' : 'market-card'}>
-              <h3>{market.isBands ? '🎸 Find a Band' : market.name}</h3>
-              {market.isBands && <div className="band-preview">Browse available bands →</div>}
-              <div className="location">📍 {market.address || market.city}, AB</div>
-              <div className="schedule">
-                {(market.schedule || []).map((s: any, i: number) => (
-                  <div key={i} className="schedule-item">
-                    <span className="day">{s.day}</span>
-                    <span className="time">{s.startTime} - {s.endTime}</span>
+          {fallbackMarkets.filter((m: any) => !m.isBands).map((market: any) => {
+            const count = byMarket[market.id]?.length || 0;
+            const vendors = byMarket[market.id] || [];
+            return (
+              <Link href={`/market/${market.slug}`} key={market.id} className="market-card">
+                <h3>{market.name}</h3>
+                <div className="location">📍 {market.address || market.city}, AB</div>
+                <div className="schedule">
+                  {(market.schedule || []).map((s: any, i: number) => (
+                    <div key={i} className="schedule-item">
+                      <span className="day">{s.day}</span>
+                      <span className="time">{s.startTime} - {s.endTime}</span>
+                    </div>
+                  ))}
+                </div>
+                {count > 0 && (
+                  <div style={{ marginTop: '0.75rem', padding: '0.5rem', background: 'rgba(255,235,67,0.15)', borderRadius: '4px' }}>
+                    <div style={{ fontSize: '0.85rem', color: '#FFEB43' }}>📋 Registered Vendors ({count})</div>
+                    <div style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                      {vendors.slice(0, 3).map((v: any, i: number) => (
+                        <div key={i} style={{ color: 'var(--text-muted)' }}>• {v.vendorName}</div>
+                      ))}
+                      {count > 3 && <div style={{ color: 'var(--text-muted)' }}>+{count - 3} more</div>}
+                    </div>
                   </div>
-                ))}
-              </div>
-            </Link>
-          ))}
+                )}
+                {count === 0 && (
+                  <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                    No vendors registered yet - be the first!
+                  </div>
+                )}
+              </Link>
+            );
+          })}
+          {/* Bands card */}
+          <Link href="/bands-listing" key="bands" className="market-card bands-card">
+            <h3>🎸 Find a Band</h3>
+            <div className="band-preview">Browse available bands →</div>
+          </Link>
         </div>
       </section>
 
