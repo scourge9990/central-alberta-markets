@@ -147,6 +147,8 @@ model Band {
   fee        String?
   markets    String?
   status     String    @default("pending") // "pending", "approved", "rejected"
+  bandStatus String   @default("available") // "available", "unavailable", "booked"
+  notes      String?   // Band's notes visible to members
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
