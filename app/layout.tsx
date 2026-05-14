@@ -28,17 +28,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/" className="logo">
                 🌾 Central Alberta Markets
               </Link>
-              <nav className="nav">
-                <Link href="/">Markets</Link>
-                <Link href="/map">Map</Link>
-                <Link href="/fresh">Whats Fresh</Link>
-                <Link href="/vendors">Vendors</Link>
-                <Link href="/vendor-signup">Become a Vendor</Link>
-                <Link href="/register">Register Table</Link>
-                <Link href="/events">📅 Events</Link>
-                <Link href="/bands">🎸 Bands</Link>
-                <Link href="/subscribe" className="btn-primary">Get Market Max</Link>
-                <Link href="/login" className="btn-secondary">Login</Link>
+              <nav className="nav" style={{ display: 'flex', flexDirection: 'column', gap: '4px', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <Link href="/" style={{ fontSize: '1.875rem' }}>Markets</Link>
+                  <Link href="/map" style={{ fontSize: '1.875rem' }}>Map</Link>
+                  <Link href="/fresh" style={{ fontSize: '1.875rem' }}>Whats Fresh</Link>
+                  <Link href="/vendors" style={{ fontSize: '1.875rem' }}>Vendors</Link>
+                  <Link href="/vendor-signup" style={{ fontSize: '1.875rem' }}>Become a Vendor</Link>
+                  <Link href="/register" style={{ fontSize: '1.875rem' }}>Register Table</Link>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <Link href="/events" style={{ fontSize: '1.875rem' }}>📅 Events</Link>
+                  <Link href="/bands" style={{ fontSize: '1.875rem' }}>🎸 Bands</Link>
+                  <Link href="/subscribe" className="btn-primary" style={{ fontSize: '1.875rem' }}>Get Market Max</Link>
+                  <Link href="/login" className="btn-secondary" style={{ fontSize: '1.875rem' }}>Login</Link>
+                </div>
               </nav>
             </div>
           </header>
