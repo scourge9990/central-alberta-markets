@@ -114,6 +114,15 @@ export default function RegisterPage() {
             <li>20x20 Booth: $150</li>
           </ul>
         </div>
+
+        <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(255,235,59,0.1)', border: '2px solid var(--primary)', borderRadius: '8px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>
+            <strong>📢 Disclaimer:</strong> This website is for advertising and coordinating purposes only. 
+            Registering a table through this site is for marketing and coordination purposes only. 
+            You must still register directly with the market organizers at the actual event location to secure your spot. 
+            This site does not process table reservations for the real events.
+          </p>
+        </div>
       </div>
     </div>
   );

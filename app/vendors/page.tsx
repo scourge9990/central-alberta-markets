@@ -100,6 +100,15 @@ export default function VendorsPage() {
           ))}
         </div>
       )}
+
+      <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(255,235,59,0.1)', border: '2px solid var(--primary)', borderRadius: '8px', maxWidth: '600px', margin: '2rem auto' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>
+          <strong>📢 Disclaimer:</strong> This website is for advertising and coordinating purposes only. 
+          The vendor listings on this site are provided for marketing the markets. If you wish to sell at any market, 
+          you must register directly with the market organizers at the actual event location. This site does not 
+          process vendor registrations for the real events.
+        </p>
+      </div>
     </div>
   );
 }

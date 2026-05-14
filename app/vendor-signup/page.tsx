@@ -123,6 +123,15 @@ export default function VendorSignupPage() {
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Questions? <a href="mailto: vendors@centralalbertamarkets.com" style={{ color: 'var(--primary)' }}>Email us</a>
         </p>
+
+        <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(255,235,59,0.1)', border: '2px solid var(--primary)', borderRadius: '8px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>
+            <strong>📢 Disclaimer:</strong> This website is for advertising and coordinating purposes only. 
+            Registering as a vendor through this site adds your business to our vendor directory for marketing purposes. 
+            You must still register directly with the market organizers at the actual event location to secure your booth. 
+            This site does not process vendor registrations for the real events.
+          </p>
+        </div>
       </div>
     </div>
   );
