@@ -105,16 +105,6 @@ export default function RegisterPage() {
           </button>
         </form>
         
-        <div style={{ marginTop: '2rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px' }}>
-          <h3 style={{ color: 'var(--primary)', marginBottom: '0.75rem' }}>💰 Table Pricing</h3>
-          <ul style={{ color: 'var(--text-muted)', marginLeft: '1.5rem' }}>
-            <li>Single Table: $25</li>
-            <li>Double Table: $45</li>
-            <li>10x10 Booth: $75</li>
-            <li>20x20 Booth: $150</li>
-          </ul>
-        </div>
-
         <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(255,235,59,0.1)', border: '2px solid var(--primary)', borderRadius: '8px' }}>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>
             <strong>📢 Disclaimer:</strong> This website is for advertising and coordinating purposes only. 
