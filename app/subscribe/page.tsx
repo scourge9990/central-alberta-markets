@@ -21,6 +21,30 @@ function SubscribeContent() {
     }
   }, []);
 
+  // After successful payment, create subscription in database
+  useEffect(() => {
+    if (isSuccess && user) {
+      fetch('/api/stripe/confirm-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          email: user.email,
+          status: 'active'
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.subscription) {
+            const updatedUser = { ...user, subscription: data.subscription };
+            setUser(updatedUser);
+            localStorage.setItem('userSession', JSON.stringify(updatedUser));
+          }
+        })
+        .catch(console.error);
+    }
+  }, [isSuccess, user]);
+
   const handleSubscribe = async () => {
     if (!user) {
       alert('Please login first');
