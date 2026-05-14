@@ -55,6 +55,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="ad-frame" style={{ padding: '8px'}}>
                 <InstagramModal />
               </div>
+              <div className="ad-frame">
+                <img 
+                  src="/advertisement.jpg" 
+                  alt="Click to enlarge" 
+                  style={{ width: '100%', borderRadius: '8px', cursor: 'pointer' }}
+                  onClick={() => window.open('/advertisement.jpg', '_blank')}
+                />
+              </div>
             </div>
             
             <div className="main-with-ads">
