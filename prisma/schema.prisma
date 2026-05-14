@@ -105,7 +105,7 @@ model VendorApplication {
 
 // Table Reservation - register table
 model TableReservation {
-  id          Int       @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   marketId    Int
   date        String
   tableType   String    // "single", "double", "booth10", "booth20"
@@ -113,8 +113,27 @@ model TableReservation {
   email       String
   requirements String?
   status     String    @default("pending") // "pending", "confirmed", "cancelled"
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  vendorStatus String   @default("attending") // "attending", "not-attending", "virtual"
+  notes      String?   // Vendor notes about their attendance
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+// Market Date - track specific market dates for status updates
+model MarketDate {
+  id           Int       @id @default(autoincrement())
+  marketId     Int
+  date         String    // "2024-06-15"
+  status      String    @default("scheduled") // "scheduled", "cancelled", "rescheduled"
+  originalTime String?   // Original time slot
+  newTime     String?   // If rescheduled
+  newDate    String?   // If rescheduled to different date
+  notes       String?   // Reason for cancellation/reschedule
+  updatedBy  String?   // Who updated it (vendor email)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  
+  @@unique([marketId, date])
 }
 // Band Application - music act signups
 model Band {
