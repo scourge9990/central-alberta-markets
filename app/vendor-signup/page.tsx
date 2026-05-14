@@ -1,11 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function VendorSignupPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const hasSubscription = user?.subscription?.status === 'active';
+
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (session) setUser(JSON.parse(session));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,6 +61,7 @@ export default function VendorSignupPage() {
       <h1 className="section-title">🏪 Vendor Registration</h1>
       <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.2rem' }}>
         Register your business to sell at Central Alberta Markets
+        {hasSubscription && <span style={{ display: 'block', color: 'var(--primary)', marginTop: '0.5rem' }}>🎉 Early Access Enabled - Your applications get priority review!</span>}
       </p>
 
       <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
@@ -97,9 +105,20 @@ export default function VendorSignupPage() {
           </div>
           
           <button type="submit" className="btn-primary" disabled={loading} style={{ width: '100%', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '1.1rem', marginTop: '1rem' }}>
-            {loading ? 'Submitting...' : 'Submit Vendor Application →'}
+            {loading ? 'Submitting...' : hasSubscription ? '🚀 Submit - Priority Review!' : 'Submit Vendor Application →'}
           </button>
         </form>
+        
+        {!hasSubscription && (
+          <div style={{ marginTop: '1.5rem', padding: '1rem', background: 'var(--surface-light)', borderRadius: '8px', textAlign: 'center' }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+              🔒 Want early access to vendor spots?
+            </p>
+            <Link href="/subscribe" style={{ color: 'var(--primary)', fontWeight: 'bold' }}>
+              Upgrade to Market Max →
+            </Link>
+          </div>
+        )}
         
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Questions? <a href="mailto: vendors@centralalbertamarkets.com" style={{ color: 'var(--primary)' }}>Email us</a>

@@ -22,6 +22,13 @@ const markets = [
 export default function MapPage() {
   const [center, setCenter] = useState<[number, number]>([52.35, -113.85]);
   const [selectedMarket, setSelectedMarket] = useState<typeof markets[0] | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const hasSubscription = user?.subscription?.status === 'active';
+
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (session) setUser(JSON.parse(session));
+  }, []);
 
   return (
     <div>
@@ -69,9 +76,30 @@ export default function MapPage() {
       )}
 
       <div style={{ marginTop: '3rem', textAlign: 'center' }}>
-        <Link href="/subscribe" className="btn-primary" style={{ fontSize: '1.2rem', padding: '1rem 2rem' }}>
-          ⭐ Upgrade for Private Map Layers
-        </Link>
+        {hasSubscription ? (
+          <div style={{ padding: '1.5rem', background: 'var(--surface)', borderRadius: '12px', border: '2px solid var(--primary)' }}>
+            <h3 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>🔓 Private Map Layers</h3>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>Premium vendor inventory data loaded!</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', textAlign: 'left' }}>
+              <div style={{ padding: '0.75rem', background: 'var(--surface-light)', borderRadius: '8px' }}>
+                <strong>🥬 Fresh Inventory</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Real-time stock levels at each market</p>
+              </div>
+              <div style={{ padding: '0.75rem', background: 'var(--surface-light)', borderRadius: '8px' }}>
+                <strong>📍 Vendor Locations</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Exact booth locations</p>
+              </div>
+              <div style={{ padding: '0.75rem', background: 'var(--surface-light)', borderRadius: '8px' }}>
+                <strong>⏰ Wait Times</strong>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Live crowd estimates</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Link href="/subscribe" className="btn-primary" style={{ fontSize: '1.2rem', padding: '1rem 2rem' }}>
+            🔒 Upgrade for Private Map Layers
+          </Link>
+        )}
       </div>
     </div>
   );

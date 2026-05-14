@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const freshItems = [
@@ -14,6 +15,32 @@ const freshItems = [
 ];
 
 export default function WhatsFreshPage() {
+  const [user, setUser] = useState<any>(null);
+  const [alerts, setAlerts] = useState<number[]>([]);
+  const hasSubscription = user?.subscription?.status === 'active';
+
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (session) setUser(JSON.parse(session));
+  }, []);
+
+  const handleSetAlert = (itemName: string, index: number) => {
+    if (!user) {
+      alert('Please login to set alerts');
+      return;
+    }
+    if (!hasSubscription) {
+      alert('Daily alerts are a premium feature. Upgrade to Market Max!');
+      return;
+    }
+    if (!alerts.includes(index)) {
+      setAlerts([...alerts, index]);
+      alert(`Alert set for ${itemName}! You'll be notified when available.`);
+    } else {
+      setAlerts(alerts.filter(i => i !== index));
+      alert(`Alert removed for ${itemName}`);
+    }
+  };
   return (
     <div>
       <h1 className="section-title">🍅 Whats Fresh This Weekend</h1>
@@ -71,6 +98,29 @@ export default function WhatsFreshPage() {
               }}>
                 {item.category}
               </div>
+              {hasSubscription ? (
+                <button
+                  onClick={() => handleSetAlert(item.name, i)}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    marginTop: '0.75rem',
+                    padding: '0.5rem',
+                    background: alerts.includes(i) ? 'var(--gold)' : 'var(--surface)',
+                    color: alerts.includes(i) ? 'var(--secondary)' : 'var(--text)',
+                    border: '1px solid var(--primary)',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  {alerts.includes(i) ? '✅ Alert On' : '🔔 Set Alert'}
+                </button>
+              ) : (
+                <div style={{ marginTop: '0.75rem', padding: '0.5rem', background: 'var(--surface-light)', borderRadius: '4px', fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center' }}>
+                  🔒 Item alerts - Premium
+                </div>
+              )}
             </div>
           </div>
         ))}
