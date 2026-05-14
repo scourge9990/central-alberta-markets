@@ -8,37 +8,18 @@ function SubscribeContent() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
   const isSuccess = searchParams.get('success') === 'true';
   const isCanceled = searchParams.get('canceled') === 'true';
+
+  // Check subscription from localStorage (set during login)
+  const hasSubscription = user?.subscription?.status === 'active';
 
   useEffect(() => {
     const session = localStorage.getItem('userSession');
     if (session) {
-      const userData = JSON.parse(session);
-      setUser(userData);
-      setSubscriptionStatus(userData.subscription?.status || null);
+      setUser(JSON.parse(session));
     }
   }, []);
-
-  // Handle success from Stripe
-  useEffect(() => {
-    if (isSuccess && user) {
-      // Refresh subscription status from server
-      fetch(`/api/auth/account?userId=${user.id}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.user?.subscription) {
-            setSubscriptionStatus(data.user.subscription.status);
-            // Update localStorage
-            const updatedUser = { ...user, subscription: data.user.subscription };
-            localStorage.setItem('userSession', JSON.stringify(updatedUser));
-            setUser(updatedUser);
-          }
-        })
-        .catch(console.error);
-    }
-  }, [isSuccess, user]);
 
   const handleSubscribe = async () => {
     if (!user) {
@@ -87,7 +68,7 @@ function SubscribeContent() {
 
       <div className="pricing-grid">
         {/* Free Tier */}
-        <div className="pricing-card" style={{ opacity: subscriptionStatus === 'active' ? 0.5 : 1 }}>
+        <div className="pricing-card" style={{ opacity: hasSubscription ? 0.5 : 1 }}>
           <h3>🌿 Free</h3>
           <div className="price">$0<span>/month</span></div>
           <ul>
@@ -100,13 +81,13 @@ function SubscribeContent() {
             <li>🔒 Private map layers (upgrade to unlock)</li>
             <li>🔒 Early vendor access (upgrade to unlock)</li>
           </ul>
-          <span className="btn-secondary" style={{ display: 'block', opacity: subscriptionStatus !== 'active' ? 1 : 0.5 }}>
-            {subscriptionStatus === 'active' ? '⭐ Active' : 'Current Plan'}
+          <span className="btn-secondary" style={{ display: 'block', opacity: hasSubscription ? 0.5 : 1 }}>
+            {hasSubscription ? '⭐ Downgrade' : 'Current Plan'}
           </span>
         </div>
 
         {/* Premium Tier */}
-        <div className="pricing-card featured" style={{ display: subscriptionStatus === 'active' ? 'none' : 'block' }}>
+        <div className="pricing-card featured" style={{ display: hasSubscription ? 'none' : 'block' }}>
           <div style={{ position: 'absolute', top: '-12px', right: '20px', background: 'var(--gold)', color: 'var(--secondary)', padding: '4px 16px', borderRadius: '20px', fontWeight: 'bold', fontSize: '0.85rem' }}>
             ⭐ BEST VALUE
           </div>
@@ -133,7 +114,7 @@ function SubscribeContent() {
         </div>
 
         {/* Show active subscription status */}
-        {subscriptionStatus === 'active' && (
+        {hasSubscription && (
           <div className="pricing-card featured" style={{ display: 'block' }}>
             <div style={{ position: 'absolute', top: '-12px', right: '20px', background: 'var(--gold)', color: 'var(--secondary)', padding: '4px 16px', borderRadius: '20px', fontWeight: 'bold', fontSize: '0.85rem' }}>
               ⭐ ACTIVE
