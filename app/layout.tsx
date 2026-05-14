@@ -52,8 +52,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 />
               </div>
               <div className="ad-frame">
-                <h4>Advertise Here</h4>
-                <p className="ad-placeholder">Your ad could be here!</p>
+                <img 
+                  src="/instagram-post.jpg" 
+                  alt="Arabic cheese from Print Your Heart Out Red Deer - Central Alberta Markets" 
+                  style={{ width: '100%', borderRadius: '8px' }}
+                />
               </div>
             </div>
             
