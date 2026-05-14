@@ -74,7 +74,11 @@ function SubscribeContent() {
       {isSuccess && (
         <div style={{ background: 'rgba(34,197,94,0.2)', border: '1px solid #22c55e', color: '#22c55e', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', textAlign: 'center' }}>
           ✅ Payment successful! Welcome to Market Max! <br />
-          <Link href="/account" style={{ color: '#22c55e', textDecoration: 'underline' }}>View your account →</Link>
+          <br />
+          <strong>Your subscription is now active.</strong><br />
+          <Link href="/account" className="btn-primary" style={{ display: 'inline-block', marginTop: '0.5rem' }}>
+            View My Account →
+          </Link>
         </div>
       )}
       <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.2rem' }}>
@@ -122,9 +126,9 @@ function SubscribeContent() {
             className="btn-primary" 
             style={{ display: 'block', width: '100%', fontSize: '1.1rem', cursor: loading ? 'wait' : 'pointer' }}
             onClick={handleSubscribe}
-            disabled={loading}
+            disabled={loading || isSuccess}
           >
-            {loading ? 'Loading...' : user ? 'Subscribe with Stripe →' : 'Login to Subscribe'}
+            {isSuccess ? '✅ SUBSCRIBED!' : loading ? 'Loading...' : user ? 'Subscribe with Stripe →' : 'Login to Subscribe'}
           </button>
         </div>
 
