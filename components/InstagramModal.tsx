@@ -22,18 +22,15 @@ export function InstagramModal() {
 
   return (
     <>
-      {/* Clickable Instagram Image */}
+      {/* Clickable Instagram Image - Thumbnail in Ad Frame */}
       <div 
-        className="ad-frame" 
-        style={{ padding: '8px', cursor: 'pointer' }}
         onClick={() => setIsOpen(true)}
         role="button"
         aria-label="Click to enlarge image"
       >
         <img 
           src="/instagram-post.jpg" 
-          alt="Arabic cheese from Print Your Heart Out Red Deer - Central Alberta Markets" 
-          style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '6px' }}
+          alt="Arabic cheese from Print Your Heart Out Red Deer" 
         />
       </div>
 
