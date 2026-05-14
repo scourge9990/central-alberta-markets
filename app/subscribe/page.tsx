@@ -103,11 +103,6 @@ function SubscribeContent() {
             <li>✅ Basic interactive map</li>
             <li>✅ Weekly "Whats Fresh" section</li>
             <li>✅ Market locations & times</li>
-            <li>🔒 Daily alerts (upgrade to unlock)</li>
-            <li>🔒 Item alerts (upgrade to unlock)</li>
-            <li>🔒 Private map layers (upgrade to unlock)</li>
-            <li>🔒 Early vendor access (upgrade to unlock)</li>
-            <li>🔒 Live member chat (upgrade to unlock)</li>
           </ul>
           <span className="btn-secondary" style={{ display: 'block', opacity: hasSubscription ? 0.5 : 1 }}>
             {hasSubscription ? '⭐ Downgrade' : 'Current Plan'}
