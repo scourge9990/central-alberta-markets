@@ -107,6 +107,7 @@ function SubscribeContent() {
             <li>🔒 Item alerts (upgrade to unlock)</li>
             <li>🔒 Private map layers (upgrade to unlock)</li>
             <li>🔒 Early vendor access (upgrade to unlock)</li>
+            <li>🔒 Live member chat (upgrade to unlock)</li>
           </ul>
           <span className="btn-secondary" style={{ display: 'block', opacity: hasSubscription ? 0.5 : 1 }}>
             {hasSubscription ? '⭐ Downgrade' : 'Current Plan'}
@@ -128,6 +129,7 @@ function SubscribeContent() {
             <li><strong>Early access</strong> to vendor deals & specials</li>
             <li><strong>Real-time "whats available now"</strong> updates</li>
             <li><strong>Vendor dashboard access</strong> to update your items</li>
+            <li><strong>💬 Live member chat</strong> with other market members</li>
             <li>Priority support</li>
           </ul>
           <button 
@@ -154,6 +156,7 @@ function SubscribeContent() {
               <li>✅ Daily alerts enabled</li>
               <li>✅ Private map layers unlocked</li>
               <li>✅ Early access enabled</li>
+              <li>✅ 💬 Live member chat</li>
               <li>✅ Priority support</li>
             </ul>
             <Link href="/account" className="btn-primary" style={{ display: 'block', textAlign: 'center' }}>
