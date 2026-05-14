@@ -38,9 +38,9 @@ export default function RegisterPage() {
   if (submitted) {
     return (
       <div>
-        <h1 className="section-title">✅ Table Reserved!</h1>
+        <h1 className="section-title">✅ Table Posted!</h1>
         <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.2rem' }}>
-          Thank you! We'll confirm your reservation soon.
+          Your table has been posted to the calendar. Members can now see your updates in real time.
         </p>
         <Link href="/" className="btn-primary" style={{ display: 'block', width: '200px', margin: '2rem auto', textAlign: 'center' }}>
           Back to Home
@@ -51,9 +51,9 @@ export default function RegisterPage() {
 
   return (
     <div>
-      <h1 className="section-title">🪑 Register a Table</h1>
+      <h1 className="section-title">🪑 Post Table to Calendar</h1>
       <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.2rem' }}>
-        Reserve a table or booth at your local market
+        Post your table to the calendar so members can see updates in real time
       </p>
 
       <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
@@ -101,7 +101,7 @@ export default function RegisterPage() {
           </div>
           
           <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '1.1rem', marginTop: '1rem' }}>
-            {loading ? 'Submitting...' : 'Reserve My Table →'}
+            {loading ? 'Posting...' : 'Post My Table to Calendar →'}
           </button>
         </form>
         
