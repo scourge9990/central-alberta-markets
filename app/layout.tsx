@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Link from 'next/link';
 import { InstagramModal } from '@/components/InstagramModal';
+import { LiveTicker } from '@/components/LiveTicker';
 
 export const metadata: Metadata = {
   title: 'CentralAlbertaMarkets.com - Fresh Local Markets',
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
           </main>
+          <LiveTicker />
           <footer className="footer">
             <div className="footer-content">
               <Link href="/admin">Vendor Login</Link>
