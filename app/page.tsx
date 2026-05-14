@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { fallbackMarkets, freshItems } from '@/lib/db';
 import { DownloadButton } from '@/components/DownloadButton';
+import { LiveTicker } from '@/components/LiveTicker';
 
 export const revalidate = 30;
 
@@ -53,6 +54,8 @@ export default async function Home() {
           <DownloadButton />
         </div>
       </div>
+
+      <LiveTicker />
 
       {/* Markets Grid */}
       <section>

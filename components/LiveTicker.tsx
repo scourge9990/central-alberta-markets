@@ -66,55 +66,61 @@ export function LiveTicker() {
 
   if (!isPaidMember) return null;
 
+  // Fixed position between ad frames - same styling as ad cards
   return (
     <div style={{
+      position: 'fixed',
+      top: 'calc(50% + 120px)',
+      left: 'calc(50% + 200px)',
+      width: '760px',
+      transform: 'translateY(-50%)',
       background: '#0a0a0a',
-      borderTop: '3px solid #FFEB43',
-      padding: '16px 20px',
-      margin: '0 auto',
-      maxWidth: '100%',
+      border: '2px solid #FFEB43',
+      borderRadius: '8px',
+      padding: '12px 16px',
+      zIndex: 100,
+      boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
     }}>
       {/* Header */}
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
-        marginBottom: '12px',
-        maxWidth: '1200px',
-        margin: '0 auto 12px',
+        marginBottom: '8px',
       }}>
         <span style={{ 
           color: '#FFEB43', 
           fontWeight: 'bold',
-          fontSize: '0.9rem',
-          letterSpacing: '2px'
+          fontSize: '0.8rem',
+          letterSpacing: '1px'
         }}>
-          💬 LIVE MARKET CHAT
+          💬 LIVE CHAT
         </span>
         <span style={{ 
           color: '#22c55e', 
-          fontSize: '0.75rem',
+          fontSize: '0.65rem',
           animation: 'pulse 2s infinite'
         }}>
           ● LIVE
         </span>
       </div>
 
-      {/* Scrolling Messages - Full Width */}
+      {/* Scrolling Messages */}
       <div style={{
-        height: '60px',
+        height: '45px',
         overflow: 'hidden',
-        marginBottom: '12px',
-        maxWidth: '1200px',
-        margin: '0 auto 12px',
+        marginBottom: '8px',
       }}>
         {messages.slice(-3).map((msg, i) => (
           <div
             key={msg.id}
             style={{
-              padding: '3px 0',
-              fontSize: '0.85rem',
+              padding: '2px 0',
+              fontSize: '0.75rem',
               animation: 'scrollUp 6s ease-in-out forwards',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             <span style={{ fontWeight: 'bold', color: '#FFEB43' }}>
@@ -126,34 +132,29 @@ export function LiveTicker() {
           </div>
         ))}
         {messages.length === 0 && (
-          <p style={{ color: '#888888', fontSize: '0.85rem' }}>
-            No messages yet. Start the conversation!
+          <p style={{ color: '#888888', fontSize: '0.75rem' }}>
+            No messages yet. Start the chat!
           </p>
         )}
       </div>
 
-      {/* Input - Full Width */}
-      <div style={{ 
-        display: 'flex', 
-        gap: '12px', 
-        maxWidth: '1200px', 
-        margin: '0 auto' 
-      }}>
+      {/* Input */}
+      <div style={{ display: 'flex', gap: '8px' }}>
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-          placeholder="Type a message to all market members..."
-          maxLength={200}
+          placeholder="Type a message..."
+          maxLength={150}
           style={{
             flex: 1,
-            padding: '12px 16px',
+            padding: '8px 10px',
             background: '#1a1a1a',
-            border: '2px solid #333',
-            borderRadius: '6px',
+            border: '1px solid #333',
+            borderRadius: '4px',
             color: '#FFFFFF',
-            fontSize: '0.9rem',
+            fontSize: '0.75rem',
           }}
         />
         <button
@@ -163,10 +164,10 @@ export function LiveTicker() {
             background: '#FFEB43',
             color: '#003594',
             border: 'none',
-            borderRadius: '6px',
-            padding: '12px 24px',
+            borderRadius: '4px',
+            padding: '8px 12px',
             cursor: sending ? 'not-allowed' : 'pointer',
-            fontSize: '0.9rem',
+            fontSize: '0.75rem',
             fontWeight: 'bold',
           }}
         >
@@ -176,10 +177,10 @@ export function LiveTicker() {
 
       <style jsx global>{`
         @keyframes scrollUp {
-          0% { transform: translateY(20px); opacity: 0; }
+          0% { transform: translateY(15px); opacity: 0; }
           15% { transform: translateY(0); opacity: 1; }
           85% { opacity: 1; }
-          100% { transform: translateY(-40px); opacity: 0; }
+          100% { transform: translateY(-30px); opacity: 0; }
         }
         @keyframes pulse {
           0%, 100% { opacity: 1; }
