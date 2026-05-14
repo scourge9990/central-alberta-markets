@@ -12,7 +12,8 @@ export async function POST(request: NextRequest) {
     }
 
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
+      include: { subscription: true }
     });
 
     if (!user) {
@@ -44,7 +45,8 @@ export async function POST(request: NextRequest) {
         name: user.name, 
         role: user.role,
         isAdmin: user.role === 'admin',
-        isVendor: user.role === 'vendor'
+        isVendor: user.role === 'vendor',
+        subscription: user.subscription
       } 
     });
   } catch (error: any) {
