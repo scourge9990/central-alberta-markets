@@ -11,10 +11,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email and password required' }, { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email },
-      include: { subscription: true }
-    });
+    let user;
+    try {
+      user = await prisma.user.findUnique({
+        where: { email },
+        include: { subscription: true }
+      });
+    } catch {
+      user = await prisma.user.findUnique({
+        where: { email }
+      });
+    }
 
     if (!user) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
@@ -46,7 +53,7 @@ export async function POST(request: NextRequest) {
         role: user.role,
         isAdmin: user.role === 'admin',
         isVendor: user.role === 'vendor',
-        subscription: user.subscription
+        subscription: (user as any).subscription || null
       } 
     });
   } catch (error: any) {
