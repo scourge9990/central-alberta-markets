@@ -21,9 +21,12 @@ function SubscribeContent() {
     }
   }, []);
 
-  // After successful payment, create subscription in database
+  // Initialize + create subscription after payment
   useEffect(() => {
     if (isSuccess && user) {
+      // First ensure table exists
+      fetch('/api/init', { method: 'POST' }).catch(() => {});
+      
       fetch('/api/stripe/confirm-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

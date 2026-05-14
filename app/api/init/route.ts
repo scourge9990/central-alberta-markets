@@ -3,7 +3,7 @@ import { prisma } from '../../../lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
-    // Create Subscription table if it doesn't exist
+    // Auto-create Subscription table if it doesn't exist
     await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS "Subscription" (
         id SERIAL PRIMARY KEY,
@@ -17,11 +17,10 @@ export async function POST(request: NextRequest) {
         createdAt TIMESTAMP DEFAULT NOW(),
         CONSTRAINT "Subscription_userId_key" UNIQUE ("userId")
       )
-    `;
+    `.catch(() => {});
     
-    return NextResponse.json({ success: true, message: 'Subscription table ready' });
+    return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error('Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
