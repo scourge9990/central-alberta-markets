@@ -66,15 +66,13 @@ export function LiveTicker() {
 
   if (!isPaidMember) return null;
 
-  // Fixed position between ad frames
-  // Ad cards are: left at 10px (320px wide), right at 10px (320px wide)
-  // Space between = viewport - 660px, centered
+  // Fixed position at BOTTOM between ad frames
   return (
     <div style={{
       position: 'fixed',
-      top: 'calc(50% + 120px)',
+      bottom: '20px',
       left: '50%',
-      transform: 'translate(-50%, -50%)',
+      transform: 'translateX(-50%)',
       width: 'calc(100vw - 680px)',
       maxWidth: '800px',
       minWidth: '400px',
