@@ -66,14 +66,18 @@ export function LiveTicker() {
 
   if (!isPaidMember) return null;
 
-  // Fixed position between ad frames - same styling as ad cards
+  // Fixed position between ad frames
+  // Ad cards are: left at 10px (320px wide), right at 10px (320px wide)
+  // Space between = viewport - 660px, centered
   return (
     <div style={{
       position: 'fixed',
       top: 'calc(50% + 120px)',
-      left: 'calc(50% + 200px)',
-      width: '760px',
-      transform: 'translateY(-50%)',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 'calc(100vw - 680px)',
+      maxWidth: '800px',
+      minWidth: '400px',
       background: '#0a0a0a',
       border: '2px solid #FFEB43',
       borderRadius: '8px',
@@ -118,9 +122,10 @@ export function LiveTicker() {
               padding: '2px 0',
               fontSize: '0.75rem',
               animation: 'scrollUp 6s ease-in-out forwards',
-              whiteSpace: 'nowrap',
+              whiteSpace: 'normal',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
+              maxLines: 1,
             }}
           >
             <span style={{ fontWeight: 'bold', color: '#FFEB43' }}>
