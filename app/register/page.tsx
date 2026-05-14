@@ -1,14 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function RegisterPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const hasSubscription = user?.subscription?.status === 'active';
+
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (session) setUser(JSON.parse(session));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Check for subscription
+    if (!hasSubscription) {
+      alert('📢 This feature is for paid Market Max members only. Please subscribe to post tables to the calendar.');
+      return;
+    }
+    
     setLoading(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -54,7 +68,26 @@ export default function RegisterPage() {
       <h1 className="section-title">🪑 Post Table to Calendar</h1>
       <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.2rem' }}>
         Post your table to the calendar so members can see updates in real time
+        {hasSubscription && <span style={{ display: 'block', color: 'var(--primary)', marginTop: '0.5rem' }}>🎉 Market Max Member - You can post!</span>}
       </p>
+
+      {!hasSubscription ? (
+        <div style={{ textAlign: 'center', padding: '2rem', background: 'var(--surface-light)', borderRadius: '12px', maxWidth: '500px', margin: '0 auto' }}>
+          <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>🔒 Premium Feature</h2>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+            Posting tables to the calendar is a Market Max member-only feature. Upgrade to unlock:
+          </p>
+          <ul style={{ color: 'var(--text-muted)', textAlign: 'left', marginLeft: '2rem', marginBottom: '1.5rem' }}>
+            <li>✓ Post tables to the calendar</li>
+            <li>✓ See real-time vendor updates</li>
+            <li>✓ Get daily alerts for your favorite vendors</li>
+            <li>✓ Early access to market spots</li>
+          </ul>
+          <Link href="/subscribe" className="btn-primary" style={{ display: 'inline-block', padding: '0.75rem 2rem' }}>
+            Upgrade to Market Max →
+          </Link>
+        </div>
+      ) : (
 
       <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
@@ -114,6 +147,7 @@ export default function RegisterPage() {
           </p>
         </div>
       </div>
+      )}
     </div>
   );
 }
