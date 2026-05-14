@@ -56,16 +56,13 @@ export default function SubscribePage() {
           <h3>🌿 Free</h3>
           <div className="price">$0<span>/month</span></div>
           <ul>
-            <li>✅ View all market schedules</li>
-            <li>✅ Basic interactive map</li>
-            <li>✅ Weekly "Whats Fresh" section</li>
-            <li>✅ Market locations & times</li>
-            <li style={{ opacity: 0.5, textDecoration: 'line-through' }}>🔒 Daily alerts for your vendors</li>
-            <li style={{ opacity: 0.5, textDecoration: 'line-through' }}>🔒 Item-specific alerts</li>
-            <li style={{ opacity: 0.5, textDecoration: 'line-through' }}>🔒 Private map layers</li>
-            <li style={{ opacity: 0.5, textDecoration: 'line-through' }}>🔒 Early vendor access</li>
-            <li style={{ opacity: 0.5, textDecoration: 'line-through' }}>🔒 Real-time availability</li>
-            <li style={{ opacity: 0.5, textDecoration: 'line-through' }}>🔒 Vendor dashboard</li>
+            <li>View all market schedules</li>
+            <li>Basic interactive map</li>
+            <li>Weekly "Whats Fresh" section</li>
+            <li>Market locations & times</li>
+            <li>🔒 Private layers (locked)</li>
+            <li>🔒 Email alerts (locked)</li>
+            <li>🔒 Early vendor access (locked)</li>
           </ul>
           <Link href="/" className="btn-secondary" style={{ display: 'block' }}>
             Current Plan

@@ -53,9 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 />
               </div>
               <div className="ad-frame">
-                <a href="/ad-bottom.jpg" target="_blank" rel="noopener">
+                <a href="/advertisement.jpg" target="_blank" rel="noopener">
                   <img 
-                    src="/ad-bottom.jpg" 
+                    src="/advertisement.jpg" 
                     alt="Click to enlarge" 
                     style={{ width: '100%', borderRadius: '8px', cursor: 'pointer' }}
                   />
