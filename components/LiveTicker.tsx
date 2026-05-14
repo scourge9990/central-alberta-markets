@@ -116,7 +116,7 @@ export function LiveTicker() {
 
       {/* Scrolling Messages */}
       <div style={{
-        height: '45px',
+        height: '60px',
         overflow: 'hidden',
         marginBottom: '8px',
       }}>
