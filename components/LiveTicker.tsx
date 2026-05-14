@@ -156,7 +156,7 @@ export function LiveTicker() {
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
           placeholder="Type a message..."
-          maxLength={150}
+          maxLength={500}
           style={{
             flex: 1,
             padding: '8px 10px',
