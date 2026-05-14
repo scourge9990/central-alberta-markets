@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-export default function SubscribePage() {
+function SubscribeContent() {
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
-  const searchParams = useSearchParams();
   const isSuccess = searchParams.get('success') === 'true';
   const isCanceled = searchParams.get('canceled') === 'true';
 
@@ -160,5 +160,13 @@ export default function SubscribePage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function SubscribePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SubscribeContent />
+    </Suspense>
   );
 }
