@@ -47,7 +47,7 @@ export function LiveTicker() {
     setSending(true);
 
     try {
-      await fetch('/api/chat', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -56,10 +56,17 @@ export function LiveTicker() {
           message: newMessage.trim()
         })
       });
-      setNewMessage('');
-      loadMessages();
+      const data = await res.json();
+      
+      if (data.success) {
+        setNewMessage('');
+        loadMessages();
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
     } catch (err) {
       console.error(err);
+      alert('Error sending message.');
     }
     setSending(false);
   };

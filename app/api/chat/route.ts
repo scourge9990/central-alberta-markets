@@ -8,21 +8,25 @@ export async function POST(request: Request) {
     const { email, name, message } = body;
 
     if (!email || !name || !message) {
-      return NextResponse.json({ success: false }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Missing fields' }, { status: 400 });
     }
 
     try {
-      await prisma.$executeRaw`
-        INSERT INTO "ChatMessage" (email, name, message, "createdAt")
-        VALUES (${email}, ${name}, ${message}, NOW())
-      `;
+      await prisma.chatMessage.create({
+        data: {
+          email,
+          name,
+          message,
+        }
+      });
+      return NextResponse.json({ success: true });
     } catch (e) {
-      console.log('Chat save:', e);
+      console.error('Chat save error:', e);
+      return NextResponse.json({ success: false, error: 'Database error' }, { status: 500 });
     }
-
-    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ success: false }, { status: 500 });
+    console.error('Chat POST error:', error);
+    return NextResponse.json({ success: false, error: 'Server error' }, { status: 500 });
   }
 }
 
@@ -31,14 +35,16 @@ export async function GET() {
   try {
     let messages: any[] = [];
     try {
-      messages = await prisma.$queryRaw`
-        SELECT * FROM "ChatMessage" ORDER BY "createdAt" DESC LIMIT 10
-      `;
+      messages = await prisma.chatMessage.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 10
+      });
     } catch (e) {
-      console.log('Chat fetch:', e);
+      console.error('Chat fetch error:', e);
     }
     return NextResponse.json({ messages: messages.reverse() });
   } catch (error) {
+    console.error('Chat GET error:', error);
     return NextResponse.json({ messages: [] });
   }
 }
