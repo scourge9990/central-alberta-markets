@@ -13,11 +13,14 @@ export async function POST(request: NextRequest) {
 
     let user;
     try {
+      // Try with subscription include
       user = await prisma.user.findUnique({
         where: { email },
         include: { subscription: true }
       });
-    } catch {
+    } catch (e: any) {
+      console.log('Subscription include failed:', e.message);
+      // Fallback: try simple query
       user = await prisma.user.findUnique({
         where: { email }
       });
