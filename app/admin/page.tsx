@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const mockVendorItems = [
   { id: 1, name: 'Fresh Lettuce', category: 'Produce', price: '$4.99', unit: 'per bunch', available: true },
@@ -14,10 +15,24 @@ const mockVendorItems = [
 ];
 
 export default function VendorDashboard() {
+  const router = useRouter();
   const [items, setItems] = useState(mockVendorItems);
   const [activeTab, setActiveTab] = useState('items');
   const [applications, setApplications] = useState<any[]>([]);
   const [loadingApps, setLoadingApps] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const hasSubscription = user?.subscription?.status === 'active';
+
+  // Check login
+  useEffect(() => {
+    const session = localStorage.getItem('userSession');
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+    const userData = JSON.parse(session);
+    setUser(userData);
+  }, [router]);
 
   // Fetch applications when tab is selected
   useEffect(() => {
@@ -52,6 +67,34 @@ export default function VendorDashboard() {
   };
 
   const availableCount = items.filter(i => i.available).length;
+
+  // Show upgrade screen if not premium
+  if (user && !hasSubscription) {
+    return (
+      <div>
+        <h1 className="section-title">🔒 Vendor Dashboard - Premium Required</h1>
+        <div style={{ maxWidth: '500px', margin: '0 auto', textAlign: 'center', padding: '2rem' }}>
+          <div style={{ background: 'var(--surface)', padding: '2rem', borderRadius: '16px', border: '2px solid var(--primary)' }}>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔐</div>
+            <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Upgrade to Market Max</h2>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+              The vendor dashboard is a premium feature. Upgrade to manage your items and get real-time updates!
+            </p>
+            <ul style={{ textAlign: 'left', marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+              <li>📦 Update items in real-time</li>
+              <li>🔔 Send alerts to subscribers</li>
+              <li>💰 Early access to vendor deals</li>
+              <li>📊 Sales analytics</li>
+              <li>Priority support</li>
+            </ul>
+            <a href="/subscribe" className="btn-primary" style={{ display: 'inline-block', padding: '0.75rem 2rem', fontSize: '1.1rem' }}>
+              ⭐ Upgrade Now - $20/month
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
