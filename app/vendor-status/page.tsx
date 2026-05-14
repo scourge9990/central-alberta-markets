@@ -106,7 +106,7 @@ export default function VendorStatusPage() {
         <div style={{ textAlign: 'center', padding: '2rem', background: 'var(--surface-light)', borderRadius: '12px', maxWidth: '500px', margin: '0 auto' }}>
           <p style={{ color: 'var(--text-muted)' }}>
             You haven't posted any tables yet.
-          </a>
+          </p>
           <a href="/register" className="btn-primary" style={{ display: 'inline-block', marginTop: '1rem' }}>
             Post a Table →
           </a>
