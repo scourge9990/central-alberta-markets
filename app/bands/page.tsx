@@ -126,6 +126,14 @@ export default function BandsPage() {
         <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Questions? <a href="mailto: bands@centralalbertamarkets.com" style={{ color: 'var(--primary)' }}>Email us</a>
         </p>
+
+        <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(255,235,59,0.1)', border: '2px solid var(--primary)', borderRadius: '8px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>
+            <strong>📢 Disclaimer:</strong> This website provides a platform for connecting bands with market organizers. 
+            Registering your band here adds you to our directory for marketing purposes. To book a band for your market, 
+            you must contact them directly. We do not process actual bookings - this site is for connections and marketing only.
+          </p>
+        </div>
       </div>
     </div>
   );

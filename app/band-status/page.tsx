@@ -187,6 +187,13 @@ export default function BandStatusPage() {
           <strong>💡 Tip:</strong> Updating your status here automatically updates the bands listing in real-time for market organizers to see!
         </p>
       </div>
+
+      <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(255,235,59,0.1)', border: '2px solid var(--primary)', borderRadius: '8px', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+          <strong>📢 Disclaimer:</strong> This website provides a platform for connecting bands with market organizers. 
+          We do not process actual bookings - this site is for connections and marketing only.
+        </p>
+      </div>
     </div>
   );
 }
