@@ -51,11 +51,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   style={{ width: '100%', borderRadius: '8px' }}
                 />
               </div>
-              <div className="ad-frame">
+              <div className="ad-frame" style={{ padding: '8px'}}>
                 <img 
                   src="/instagram-post.jpg" 
                   alt="Arabic cheese from Print Your Heart Out Red Deer - Central Alberta Markets" 
-                  style={{ width: '100%', borderRadius: '8px' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '6px' }}
                 />
               </div>
             </div>
